@@ -25,3 +25,7 @@ Manga manager to manage current reading manga.
 ## Getting support
 
 If you have any questions, suggestions or bug reports, please create an issue on the [GitHub project page](https://github.com/PonyLucky/Pony-s-Manga-Manager/issues).
+
+## Copyrights
+
+Icon from Pixabay by [Akane-k](https://pixabay.com/illustrations/moe-rice-eat-hamburger-breakfast-3336882/) under [Pixabay License](https://pixabay.com/service/license/).
