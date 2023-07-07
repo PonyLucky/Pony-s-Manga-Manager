@@ -41,4 +41,32 @@ class Mangaread {
         // Return info.
         return mangaChapterInfo;
     }
+
+    static async getChapters(mangaUrl) {
+        let listClass = "main";
+
+        // Fetch manga page.
+        let response = await fetch(mangaUrl);
+        let html = await response.text();
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(html, "text/html");
+
+        // Get list of chapters.
+        let list = doc.getElementsByClassName(listClass)[0];
+        let chaptersA = list.getElementsByTagName("a")
+        let chapters = [];
+
+        // Get chapter URLs.
+        for (let i = 0; i < chaptersA.length; i++) {
+            let url = chaptersA[i].getAttribute("href");
+            let index = url.lastIndexOf("/chapter-");
+            chapters.push(url.substring(index + 9, url.length - 1));
+        }
+
+        // DEBUG
+        if (DEBUG) console.log("Chapters: " + chapters);
+
+        // Return chapters.
+        return chapters;
+    }
 }
