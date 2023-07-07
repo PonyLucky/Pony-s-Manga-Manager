@@ -129,14 +129,38 @@ function saveHistory() {
 }
 
 function uploadHistory() {
-    // Hide mangaList
-    toggle(document.getElementById("manga-list"), true);
-    // Hide buttons
-    toggle(document.getElementsByClassName("buttons")[0], true);
-    // Display #editor
-    toggle(document.getElementById("editor"), false);
-    // Focus on textarea
-    document.getElementById("editor-ta").focus();
+    // Create input element
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.style.display = "none";
+    // Add event listener
+    input.addEventListener("change", (event) => {
+        // Get file
+        let file = event.target.files[0];
+        // Check if file is valid
+        if (!file || file.type !== "application/json") {
+            console.log("Invalid file.");
+            return;
+        }
+        // Read file
+        let reader = new FileReader();
+        reader.onload = (event) => {
+            // Parse file
+            let mangaHistory = JSON.parse(event.target.result);
+            // Save mangaHistory
+            browser.storage.local.set({mangaHistory: mangaHistory});
+            // Populate mangaList
+            populateHistory(mangaHistory);
+        };
+        reader.readAsText(file);
+    });
+    // Add to body
+    document.body.appendChild(input);
+    // Click input
+    input.click();
+    // Remove input
+    document.body.removeChild(input);
 }
 
 function clearHistory() {

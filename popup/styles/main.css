@@ -13,8 +13,8 @@ body {
     overflow-y: scroll;
 
     /* Var size */
-    --size-width: 400px;
-    --size-height: 500px;
+    --size-width: 100vw;
+    --size-height: 100vh;
 
     /* Size */
     width: var(--size-width);

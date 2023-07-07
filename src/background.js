@@ -1,5 +1,15 @@
 const DEBUG = false;
 
+// ---------------------------- OPEN ON CLICK ----------------------------
+
+browser.browserAction.onClicked.addListener(() => {
+    browser.tabs.create({
+        url: browser.runtime.getURL("popup/popup.html")
+    });
+});
+
+// ---------------------------- MANGA WEBSITES ----------------------------
+
 browser.webRequest.onCompleted.addListener((details) => {
     const url = details.url;
     let mangaChapterInfo = {};
