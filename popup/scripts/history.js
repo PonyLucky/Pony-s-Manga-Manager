@@ -95,7 +95,9 @@ function saveHistory() {
         }).then((tabs) => {
             // Create dl link
             let dlLink = document.createElement("a");
-            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mangaHistoryTmp));
+            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(
+                JSON.stringify(mangaHistoryTmp, null, 4)
+            );
             dlLink.download = "manga-history.json";
             dlLink.style.display = "none";
             // Add to body
