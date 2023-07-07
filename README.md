@@ -8,13 +8,18 @@ Manga manager to manage current reading manga.
 
 ## Features
 
+### Background (while browsing)
+
+1. Automatically add new manga if website supported.
+2. Automatically update manga info.
+
+### Popup (when clicked on the extension icon)
+
 1. Ordered by last read time.
-2. Save to JSON file.
-3. Load from JSON file.
-4. Automatically add new manga if website supported.
-5. Automatically update manga info.
-6. If click on chapter number, open the full list of read chapters (for this manga).
-7. If click on rest, open the manga + chapter page.
+2. Save/Load to/from JSON file.
+3. Click on chapter number => open the full list of read chapters (for this manga).
+4. Click on item => open the last chapter page.
+5. Fetches asynchronously the number of new chapters.
 
 ## Supported websites
 
