@@ -79,6 +79,14 @@ function saveHistory() {
     browser.storage.local.get("mangaHistory", (data) => {
         let mangaHistory = data.mangaHistory || [];
 
+        // Save only the last chapter read for each manga
+        let mangaHistoryTmp = [];
+        mangaHistory.forEach((manga) => {
+            let mangaTmp = manga;
+            mangaTmp.chapters = [manga.chapters[0]];
+            mangaHistoryTmp.push(mangaTmp);
+        });
+
         // Get current tab
         browser.tabs.query({
             active: true,
@@ -86,7 +94,7 @@ function saveHistory() {
         }).then((tabs) => {
             // Create dl link
             let dlLink = document.createElement("a");
-            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mangaHistory));
+            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mangaHistoryTmp));
             dlLink.download = "manga-history.json";
             dlLink.style.display = "none";
             // Add to body
