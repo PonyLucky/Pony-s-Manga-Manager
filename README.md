@@ -29,3 +29,7 @@ If you have any questions, suggestions or bug reports, please create an issue on
 ## Copyrights
 
 Icon from Pixabay by [Akane-k](https://pixabay.com/illustrations/moe-rice-eat-hamburger-breakfast-3336882/) under [Pixabay License](https://pixabay.com/service/license/).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
