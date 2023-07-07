@@ -1,3 +1,4 @@
+// Handle save/upload/clear buttons
 document.getElementById("save-button").addEventListener("click", saveHistory);
 document.getElementById("upload-button").addEventListener("click", uploadHistory);
 document.getElementById("clear-button").addEventListener("dblclick", clearHistory);
@@ -39,7 +40,7 @@ function populateHistory(mangaHistory) {
             // Prevent default
             event.preventDefault();
             // Pass to chapters history
-            chaptersHistory(manga);
+            chaptersList(manga);
         }
         chapterNumber.title = "Click to see chapters history";
         mangaItem.appendChild(chapterNumber);
@@ -94,7 +95,9 @@ function saveHistory() {
         }).then((tabs) => {
             // Create dl link
             let dlLink = document.createElement("a");
-            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mangaHistoryTmp));
+            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(
+                JSON.stringify(mangaHistoryTmp, null, 4)
+            );
             dlLink.download = "manga-history.json";
             dlLink.style.display = "none";
             // Add to body
@@ -108,7 +111,14 @@ function saveHistory() {
 }
 
 function uploadHistory() {
-    console.log("Uploading history...");
+    // Hide mangaList
+    toggle(document.getElementById("manga-list"), true);
+    // Hide buttons
+    toggle(document.getElementsByClassName("buttons")[0], true);
+    // Display #editor
+    toggle(document.getElementById("editor"), false);
+    // Focus on textarea
+    document.getElementById("editor-ta").focus();
 }
 
 function clearHistory() {
@@ -118,66 +128,4 @@ function clearHistory() {
     browser.storage.local.set({mangaHistory: []});
     // Clear mangaList
     populateHistory([]);
-}
-
-function toggle(elmt, val) {
-    if (val === undefined) {
-        elmt.classList.toggle("hide");
-    }
-    else if (val === true) {
-        elmt.classList.add("hide");
-    }
-    else if (val === false) {
-        elmt.classList.remove("hide");
-    }
-}
-
-function chaptersHistory(history) {
-    let chapters = document.getElementById("manga-chapters");
-
-    // Hide mangaList
-    toggle(document.getElementById("manga-list"), true);
-    // Hide buttons
-    toggle(document.getElementsByClassName("buttons")[0], true);
-    // Display manga-chapters
-    toggle(chapters, false);
-
-    // Clear chapters
-    while (chapters.firstChild) {
-        chapters.removeChild(chapters.firstChild);
-    }
-
-    // Populate chapters
-    // -- Add title
-    let title = document.createElement("h2");
-    title.textContent = history.manga;
-    chapters.appendChild(title);
-    // -- Add chapters
-    let list = document.createElement("ul");
-    history.chapters.forEach((chapter) => {
-        let item = document.createElement("li");
-        item.textContent = "Chapter " + chapter;
-        item.title = "Click to open chapter";
-        item.onclick = (event) => {
-            let url = history.url + "chapter-" + chapter;
-            // Open new tab
-            browser.tabs.create({url: url});
-            // Close popup
-            window.close();
-        };
-        list.appendChild(item);
-    });
-    chapters.appendChild(list);
-    // -- Add button to go back to mangaList
-    let buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("flex");
-    let backButton = document.createElement("button");
-    backButton.textContent = "Back";
-    backButton.addEventListener("click", () => {
-        toggle(chapters, true);
-        toggle(document.getElementById("manga-list"), false);
-        toggle(document.getElementsByClassName("buttons")[0], false);
-    });
-    buttonContainer.appendChild(backButton);
-    chapters.appendChild(buttonContainer);
 }

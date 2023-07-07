@@ -1,0 +1,63 @@
+#manga-list {
+    display: flex;
+    flex-direction: column;
+    height: calc(var(--size-height) - 100px);
+    overflow-y: scroll;
+
+    /* Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #424242 #303030;
+
+    /* Background color */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+#manga-list div {
+    margin: 0;
+    padding: 20px;
+    /* Bottom border */
+    border-bottom: 1px solid #ccc;
+    text-decoration: none;
+    color: #000;
+}
+
+#manga-list div:hover {
+    background-color: #eee;
+}
+
+#manga-list div:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#manga-list div:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#manga-list div span {
+    cursor: pointer;
+}
+
+/* First span of 'div' is title */
+#manga-list div span:first-child {
+    font-weight: bold;
+}
+
+/* Last span of 'div' is chapter */
+#manga-list div span:last-child {
+    font-size: 0.8em;
+    color: #666;
+    /* Space */
+    margin-left: 10px;
+}
+
+#manga-list div span:last-child:hover {
+    color: #1e1ec4;
+    /* underline */
+    text-decoration: underline;
+}
