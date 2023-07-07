@@ -44,20 +44,28 @@
 }
 
 /* First span of 'div' is title */
-#manga-list div span:first-child {
+#manga-list div span:nth-child(1) {
     font-weight: bold;
 }
 
-/* Last span of 'div' is chapter */
-#manga-list div span:last-child {
+/* Second span of 'div' is chapter */
+#manga-list div span:nth-child(2) {
     font-size: 0.8em;
     color: #666;
     /* Space */
     margin-left: 10px;
 }
 
-#manga-list div span:last-child:hover {
+#manga-list div span:nth-child(2):hover {
     color: #1e1ec4;
     /* underline */
     text-decoration: underline;
+}
+
+/* Third span of 'div' is number of new chapters */
+#manga-list div span:nth-child(3) {
+    font-size: 0.8em;
+    color: #0a6b0a;
+    /* Space */
+    margin-left: 10px;
 }

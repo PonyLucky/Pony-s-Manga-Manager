@@ -45,6 +45,24 @@ function populateHistory(mangaHistory) {
         chapterNumber.title = "Click to see chapters history";
         mangaItem.appendChild(chapterNumber);
 
+        // Add span for new chapters
+        let newChapters = document.createElement("span");
+        newChapters.classList.add("new-chapters");
+        newChapters.classList.add("hide");
+        newChapters.textContent = "+0";
+        mangaItem.appendChild(newChapters);
+
+        // Fetch new chapters asynchronously
+        fetchNewChapters(manga.url, manga.chapters[0])
+        .then((newChaptersNumber) => {
+            // If no new chapters
+            if (newChaptersNumber === 0) return;
+            // Add new chapters to span
+            newChapters.textContent = "+" + newChaptersNumber;
+            // Show new chapters
+            toggle(newChapters, false);
+        });
+
         // Add title to specify date from last chapter (in timestamp)
         mangaItem.title = "Last read since " + new Date(manga.date).toLocaleString();
 
