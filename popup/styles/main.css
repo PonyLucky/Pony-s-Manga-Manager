@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+body {
+    background-color: #303030;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    overflow-y: scroll;
+
+    /* Var size */
+    --size-width: 400px;
+    --size-height: 500px;
+
+    /* Size */
+    width: var(--size-width);
+    height: var(--size-height);
+}
