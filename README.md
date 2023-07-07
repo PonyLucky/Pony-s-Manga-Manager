@@ -18,7 +18,7 @@ Manga manager to manage current reading manga.
 
 ## Supported websites
 
-- [x] [Mangareader](https://www.mangaread.org/)
+- [x] [Mangaread](https://www.mangaread.org/)
 - [x] [Mangakik](https://mangakik.biz/)
 - [x] [NeatManga](https://neatmangas.com/manga/)
 
