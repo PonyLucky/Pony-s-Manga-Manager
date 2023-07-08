@@ -4,7 +4,7 @@ const DEBUG = false;
 
 browser.browserAction.onClicked.addListener(() => {
     browser.tabs.create({
-        url: browser.runtime.getURL("popup/popup.html")
+        url: browser.runtime.getURL("page/index.html")
     });
 });
 

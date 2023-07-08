@@ -9,3 +9,9 @@ function toggle(elmt, val) {
         elmt.classList.remove("hide");
     }
 }
+
+function clear(target) {
+    while (target.firstChild) {
+        target.removeChild(target.firstChild);
+    }
+}
