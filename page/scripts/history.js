@@ -51,15 +51,7 @@ class MangaHistory {
         mangaItem.appendChild(newChapters);
 
         // Fetch new chapters asynchronously
-        this.chapters.fetch(manga.url, manga.chapters[0])
-        .then((newChaptersNumber) => {
-            // If no new chapters
-            if (newChaptersNumber === 0) return;
-            // Add new chapters to span
-            newChapters.textContent = "+" + newChaptersNumber;
-            // Show new chapters
-            toggle(newChapters, false);
-        });
+        this.fetchNewChapters(manga, newChapters);
 
         // Add title to specify date from last chapter (in timestamp)
         mangaItem.title = "Last read since "
@@ -86,5 +78,16 @@ class MangaHistory {
             return b.date - a.date;
         });
         return tmp;
-    }    
+    }
+    fetchNewChapters(manga, target) {
+        this.chapters.fetch(manga.url, manga.chapters[0])
+        .then((newChaptersNumber) => {
+            // If no new chapters
+            if (newChaptersNumber === 0) return;
+            // Add new chapters to span
+            target.textContent = "+" + newChaptersNumber;
+            // Show new chapters
+            toggle(target, false);
+        });
+    }
 }
