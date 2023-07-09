@@ -10,15 +10,15 @@ browser.browserAction.onClicked.addListener(() => {
 
 // ---------------------------- MANGA WEBSITES ----------------------------
 
-browser.webRequest.onCompleted.addListener((details) => {
+browser.webRequest.onCompleted.addListener(async (details) => {
     const url = details.url;
     let mangaChapterInfo = {};
     let tmp = [];
 
     // Check Websites.
-    tmp.push(Mangaread.check(url));
-    tmp.push(Mangakik.check(url));
-    tmp.push(NeatManga.check(url));
+    tmp.push(await Mangaread.check(url).then(res => res));
+    tmp.push(await Mangakik.check(url).then(res => res));
+    tmp.push(await NeatManga.check(url).then(res => res));
 
     // Get first non-empty result.
     mangaChapterInfo = tmp.find((manga) => {
