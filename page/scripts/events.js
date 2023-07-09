@@ -64,7 +64,7 @@ class Events {
                 // Save mangaHistory
                 browser.storage.local.set({mangaHistory: mangaHistory});
                 // Populate mangaList
-                populateHistory(mangaHistory);
+                (new MangaHistory).populate(mangaHistory);
             };
             reader.readAsText(file);
         });
@@ -79,6 +79,6 @@ class Events {
         // Clear mangaHistory
         browser.storage.local.set({mangaHistory: []});
         // Clear mangaList
-        populateHistory([]);
+        (new MangaHistory).populate([]);
     }
 }
