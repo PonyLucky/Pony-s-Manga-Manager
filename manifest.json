@@ -12,10 +12,11 @@
   },
   "background": {
     "scripts": [
-        "src/websites/mangaread.js",
-        "src/websites/mangakik.js",
-        "src/websites/neatmanga.js",
-        "src/background.js"
+      "src/utils.js",
+      "src/websites/mangaread.js",
+      "src/websites/mangakik.js",
+      "src/websites/neatmanga.js",
+      "src/background.js"
     ]
   },
   "browser_action": {

@@ -11,7 +11,7 @@ try {
 catch (e) {
     console.log(e);
     // DEBUG
-    const data = [];
+    const data = mangaHistoryData || [];
     (new MangaHistory(true)).populate(data);
 }
 

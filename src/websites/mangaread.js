@@ -41,6 +41,16 @@ class Mangaread {
             mangaChapterInfo.cover = await this.getCover(doc)
                 .then(cover => cover)
                 .catch(err => console.log("Error: " + err));
+            // Get author
+            mangaChapterInfo.author = this.getAuthor(doc);
+            // Get status
+            mangaChapterInfo.status = this.getStatus(doc);
+            // Get genres
+            mangaChapterInfo.genres = this.getGenres(doc);
+            // Get last realease date
+            mangaChapterInfo.lastDate = this.getLastReleaseDate(doc);
+            // Get description
+            mangaChapterInfo.description = this.getDescription(doc);
         }).catch((err) => {
             console.log("Error: " + err);
         });
@@ -62,10 +72,7 @@ class Mangaread {
         let parser = new DOMParser();
         let doc = parser.parseFromString(html, "text/html");
         // DEBUG
-        if (this.DEBUG) {
-            console.log("HTML: " + html);
-            console.log("Doc: " + doc);
-        }
+        if (this.DEBUG) console.log("Doc: " + doc);
         // Return body.
         return doc.getElementsByTagName("body")[0];
     }
@@ -78,10 +85,6 @@ class Mangaread {
         // Get image URL
         let imageURL = image.getAttribute("data-src");
         if (imageURL === null) imageURL = image.getAttribute("src");
-
-        // DEBUG
-        if (this.DEBUG) console.log("Image URL: " + imageURL);
-
         // Get base64 image from URL
         const data = await fetch(imageURL);
         const blob = await data.blob();
@@ -93,6 +96,61 @@ class Mangaread {
                 resolve(base64data);
             }
         });
+    }
+
+    static getAuthor(doc) {
+        let authorClass = "author-content";
+        let author = doc.getElementsByClassName(authorClass)[0];
+        if (author !== undefined) {
+            return cleanText(author.innerText);
+        }
+        return undefined;
+    }
+
+    static getStatus(doc) {
+        let statusHeaders = doc.getElementsByTagName("h5");
+        for (let i = 0; i < statusHeaders.length; i++) {
+            if (statusHeaders[i].innerText.includes("Status")) {
+                return statusHeaders[i].parentElement
+                .nextElementSibling.innerText;
+            }
+        }
+        return undefined;
+    }
+
+    static getGenres(doc) {
+        let genreClass = "genres-content";
+        let genres = doc.getElementsByClassName(genreClass)[0];
+        if (genres !== undefined) {
+            genres = genres.getElementsByTagName("a");
+            let genresList = []
+            for (let i = 0; i < genres.length; i++) {
+                genresList.push(cleanText(genres[i].innerText));
+            }
+            return genresList;
+        }
+        return undefined;
+    }
+
+    static getLastReleaseDate(doc) {
+        let chapterClass = "chapter-release-date";
+        // Get last chapter in date.
+        let chapter = doc.getElementsByClassName(chapterClass)[0];
+        if (chapter !== undefined) {
+            return cleanText(chapter.innerText);
+        }
+        return undefined;
+    }
+
+    static getDescription(doc) {
+        let descriptionClass = "description-summary";
+        let description = doc.getElementsByClassName(descriptionClass)[0];
+        if (description !== undefined) {
+            description = description.firstElementChild
+            .lastElementChild;
+            return cleanText(description.innerText);
+        }
+        return undefined;
     }
 
     static async getChapters(mangaUrl) {
