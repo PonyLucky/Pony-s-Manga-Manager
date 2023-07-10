@@ -2,6 +2,7 @@ class MangaHistory {
     constructor(DEBUG=false) {
         this.DEBUG = DEBUG;
         this.chapters = new Chapters(this.DEBUG);
+        this.mangaInfo = new MangaInfo(this.DEBUG);
         this.target = document.getElementById("manga-list");
     }
     populate(mangaHistory) {
@@ -24,6 +25,10 @@ class MangaHistory {
     addManga(manga) {
         let mangaItem = document.createElement("div");
         mangaItem.classList.add("manga-item");
+        // Click
+        mangaItem.addEventListener("click", () => {
+            this.mangaInfo.update(manga);
+        });
 
         let mangaCover = document.createElement("img");
         mangaCover.src = manga.cover;

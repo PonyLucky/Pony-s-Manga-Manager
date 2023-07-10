@@ -3,24 +3,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
     gap: 20px;
-
-    height: calc(var(--size-height) - 100px);
-    overflow-y: scroll;
-
-    /* Scrollbar */
-    scrollbar-width: thin;
-    scrollbar-color: #424242 #303030;
-
-    /* Background color */
-    background-color: #1e1e1e;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: #fff;
-
-    /* Padding */
-    padding: 20px;
 }
 
 #manga-list .manga-item {
