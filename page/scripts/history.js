@@ -26,19 +26,16 @@ class MangaHistory {
         mangaItem.classList.add("manga-item");
 
         let mangaCover = document.createElement("img");
-        mangaCover.classList.add("manga-cover");
         mangaCover.src = manga.cover;
         mangaItem.appendChild(mangaCover);
 
         // Add title
         let mangaTitle = document.createElement("p");
-        mangaTitle.classList.add("manga-title");
         mangaTitle.textContent = manga.manga;
         mangaItem.appendChild(mangaTitle);
 
         // Add new chapters span
         let newChapters = document.createElement("span");
-        newChapters.classList.add("new-chapters");
         newChapters.classList.add("hide");
         newChapters.textContent = "0";
         mangaItem.appendChild(newChapters);
