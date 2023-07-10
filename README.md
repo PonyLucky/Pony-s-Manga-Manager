@@ -2,6 +2,10 @@
 
 Manga manager to manage current reading manga.
 
+## Web extension
+
+[Firefox](https://addons.mozilla.org/fr/firefox/addon/manga-reader-manager/).
+
 ## Shortcut
 
 `Ctrl + Shift + M`: Open popup.
