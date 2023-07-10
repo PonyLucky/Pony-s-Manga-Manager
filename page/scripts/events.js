@@ -1,11 +1,19 @@
 class Events {
     static init() {
+        // Settings buttons
         document.getElementById("save-button")
             .addEventListener("click", Events.save);
         document.getElementById("upload-button")
             .addEventListener("click", Events.upload);
         document.getElementById("clear-button")
             .addEventListener("dblclick", Events.clear);
+        // Manga info buttons
+        document.getElementById("manga-info-read")
+            .addEventListener("click", Events.read);
+        document.getElementById("manga-info-back")
+            .addEventListener("click", Events.infoBack);
+        document.getElementsByClassName("manga-info-details-chapters")[0]
+            .addEventListener("click", Events.infoChapters);
     }
     static save() {
         // Save mangaHistory to json file
@@ -80,5 +88,26 @@ class Events {
         browser.storage.local.set({mangaHistory: []});
         // Clear mangaList
         (new MangaHistory).populate([]);
+    }
+    static read() {
+        let read = document.getElementById("manga-info-read");
+        let url = read.getAttribute("href");
+        // Open url in new tab
+        browser.tabs.create({url: url});
+        // Close popup
+        window.close();
+    }
+    static infoBack() {
+        // Toggle mangaInfo and mangaList
+        toggle(document.getElementById("manga-info"), true);
+        toggle(document.getElementById("manga-list"), false);
+        // Toggle buttons
+        toggle(document.getElementsByClassName("buttons")[0], false);
+    }
+    static infoChapters() {
+        let info = document.getElementById("manga-info");
+        let data = JSON.parse(info.dataset.manga);
+        console.log(data);
+        (new Chapters).list(data);
     }
 }

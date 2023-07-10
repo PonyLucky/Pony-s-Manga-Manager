@@ -111,8 +111,8 @@ class Mangaread {
         let statusHeaders = doc.getElementsByTagName("h5");
         for (let i = 0; i < statusHeaders.length; i++) {
             if (statusHeaders[i].innerText.includes("Status")) {
-                return statusHeaders[i].parentElement
-                .nextElementSibling.innerText;
+                return cleanText(statusHeaders[i].parentElement
+                    .nextElementSibling.innerText);
             }
         }
         return undefined;

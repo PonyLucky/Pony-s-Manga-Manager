@@ -6,9 +6,7 @@ class Chapters {
         let chapters = document.getElementById("manga-chapters");
 
         // Hide mangaList
-        toggle(document.getElementById("manga-list"), true);
-        // Hide buttons
-        toggle(document.getElementsByClassName("buttons")[0], true);
+        toggle(document.getElementById("manga-info"), true);
         // Display manga-chapters
         toggle(chapters, false);
 
@@ -28,13 +26,13 @@ class Chapters {
         chapters.appendChild(chapterList);
         // -- Add buttons to go back to mangaList
         let buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("buttons");
         buttonContainer.classList.add("flex");
         let backButton = document.createElement("button");
         backButton.textContent = "Back";
         backButton.addEventListener("click", () => {
             toggle(chapters, true);
-            toggle(document.getElementById("manga-list"), false);
-            toggle(document.getElementsByClassName("buttons")[0], false);
+            toggle(document.getElementById("manga-info"), false);
         });
         buttonContainer.appendChild(backButton);
         chapters.appendChild(buttonContainer);

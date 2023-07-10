@@ -21,6 +21,11 @@ class MangaHistory {
         this.sort(mangaHistory).forEach(
             (manga) => this.addManga(manga)
         );
+
+        // If DEBUG, click on first manga
+        if (this.DEBUG) {
+            this.target.children[0].click();
+        }
     }
     addManga(manga) {
         let mangaItem = document.createElement("div");

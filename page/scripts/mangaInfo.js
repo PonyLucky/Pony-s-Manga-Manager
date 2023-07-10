@@ -41,10 +41,10 @@ class MangaInfo {
         else this.description.innerText = manga.description;
 
         // Update read button
-        this.read.dataset.url = manga.url + "chapter-" + manga.chapters[0] + "/";
+        this.read.url = manga.url + "chapter-" + manga.chapters[0] + "/";
 
         // Update info
-        this.info.dataset.manga = manga;
+        this.info.dataset.manga = JSON.stringify(manga);
 
         // Hide mangaList
         toggle(document.getElementById("manga-list"), true);
