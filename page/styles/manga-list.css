@@ -1,6 +1,11 @@
 #manga-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+
     height: calc(var(--size-height) - 100px);
     overflow-y: scroll;
 
@@ -9,64 +14,38 @@
     scrollbar-color: #424242 #303030;
 
     /* Background color */
-    background-color: #fff;
+    background-color: #1e1e1e;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: #000;
-}
+    color: #fff;
 
-#manga-list div {
-    margin: 0;
+    /* Padding */
     padding: 20px;
-    /* Bottom border */
-    border-bottom: 1px solid #ccc;
-    text-decoration: none;
-    color: #000;
+}
+
+#manga-list .manga-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
+    width: 200px;
+    height: 300px;
 }
 
-#manga-list div:hover {
-    background-color: #eee;
+#manga-list .manga-item:hover {
+    transform: scale(1.05);
 }
 
-#manga-list div:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+#manga-list .manga-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
-#manga-list div:last-child {
-    border-bottom: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-#manga-list div span {
-    cursor: pointer;
-}
-
-/* First span of 'div' is title */
-#manga-list div span:nth-child(1) {
-    font-weight: bold;
-}
-
-/* Second span of 'div' is chapter */
-#manga-list div span:nth-child(2) {
-    font-size: 0.8em;
-    color: #666;
-    /* Space */
-    margin-left: 10px;
-}
-
-#manga-list div span:nth-child(2):hover {
-    color: #1e1ec4;
-    /* underline */
-    text-decoration: underline;
-}
-
-/* Third span of 'div' is number of new chapters */
-#manga-list div span:nth-child(3) {
-    font-size: 0.8em;
-    color: #0a6b0a;
-    /* Space */
-    margin-left: 10px;
+#manga-list .manga-item p {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
 }
