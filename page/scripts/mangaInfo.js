@@ -41,7 +41,8 @@ class MangaInfo {
         else this.description.innerText = manga.description;
 
         // Update read button
-        this.read.url = manga.url + "chapter-" + manga.chapters[0] + "/";
+        let chapterUrl = manga.url + "chapter-" + manga.chapters[0] + "/";
+        this.read.setAttribute("href", chapterUrl);
 
         // Update info
         this.info.dataset.manga = JSON.stringify(manga);
