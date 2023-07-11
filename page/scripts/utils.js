@@ -15,3 +15,16 @@ function clear(target) {
         target.removeChild(target.firstChild);
     }
 }
+
+function selectWebsites(url) {
+    // Strategy pattern to select website to use.
+    let website = null;
+    if (url.startsWith(Mangaread.url)) {
+        website = Mangaread;
+    } else if (url.startsWith(Mangakik.url)) {
+        website = Mangakik;
+    } else if (url.startsWith(NeatManga.url)) {
+        website = NeatManga;
+    } else return null;
+    return website;
+}

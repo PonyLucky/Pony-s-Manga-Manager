@@ -47,7 +47,7 @@ class Mangaread {
             mangaChapterInfo.status = this.getStatus(doc);
             // Get genres
             mangaChapterInfo.genres = this.getGenres(doc);
-            // Get last realease date
+            // Get last release date
             mangaChapterInfo.lastDate = this.getLastReleaseDate(doc);
             // Get description
             mangaChapterInfo.description = this.getDescription(doc);
@@ -146,9 +146,14 @@ class Mangaread {
         let descriptionClass = "description-summary";
         let description = doc.getElementsByClassName(descriptionClass)[0];
         if (description !== undefined) {
-            description = description.firstElementChild
-            .lastElementChild;
-            return cleanText(description.innerText);
+            let ctn = description.firstElementChild;
+            // If first child has strong tag, remove it.
+            if (ctn.firstElementChild.getElementsByTagName("strong").length > 0) {
+                ctn.removeChild(ctn.firstElementChild);
+            }
+            // Extract text.
+            description = ctn.innerText;
+            return cleanText(description);
         }
         return undefined;
     }
