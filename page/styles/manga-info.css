@@ -56,7 +56,7 @@
 }
 
 #manga-info .manga-info-header span::before {
-    content: "•";
+    content: "\2022";
     margin-right: 10px;
 }
 
