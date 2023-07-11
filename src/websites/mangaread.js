@@ -146,9 +146,14 @@ class Mangaread {
         let descriptionClass = "description-summary";
         let description = doc.getElementsByClassName(descriptionClass)[0];
         if (description !== undefined) {
-            description = description.firstElementChild
-            .lastElementChild;
-            return cleanText(description.innerText);
+            let ctn = description.firstElementChild;
+            // If first child has strong tag, remove it.
+            if (ctn.firstElementChild.getElementsByTagName("strong").length > 0) {
+                ctn.removeChild(ctn.firstElementChild);
+            }
+            // Extract text.
+            description = ctn.innerText;
+            return cleanText(description);
         }
         return undefined;
     }

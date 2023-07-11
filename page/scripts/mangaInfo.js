@@ -38,7 +38,7 @@ class MangaInfo {
         if (manga.description.trim().length === 0) {
             this.description.innerText = "No description available.";
         }
-        else this.description.innerText = manga.description;
+        else this.description.innerText = manga.description.replace(/\n/g, "\n\n");
 
         // Update read button
         let chapterUrl = manga.url + "chapter-" + manga.chapters[0] + "/";
