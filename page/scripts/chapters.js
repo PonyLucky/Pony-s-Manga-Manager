@@ -41,7 +41,7 @@ class Chapters {
         let item = document.createElement("li");
         item.textContent = "Chapter " + chapter;
         item.title = "Click to open chapter";
-        item.onclick = (event) => {
+        item.onclick = () => {
             let url = history.url + "chapter-" + chapter;
             // Open new tab
             browser.tabs.create({url: url});

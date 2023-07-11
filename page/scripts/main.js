@@ -19,5 +19,5 @@ catch (e) {
 // Events
 // -----------------------------
 
-// Initialize events for buttons
+// Initialize events
 Events.init();
