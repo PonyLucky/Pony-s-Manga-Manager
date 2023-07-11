@@ -47,11 +47,36 @@ class MangaInfo {
         // Update info
         this.info.dataset.manga = JSON.stringify(manga);
 
+        // Update lastDate
+        this.fetchLastDate(manga.url).then((lastDate) => {
+            this.lastUpdate.innerText = lastDate;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
         // Hide mangaList
         toggle(document.getElementById("manga-list"), true);
         // Hide buttons
         toggle(document.getElementsByClassName("buttons")[0], true);
         // Display manga info
         toggle(this.info, false);
+    }
+    async fetchLastDate(url) {
+        // Strategy pattern to select website to use.
+        let website = selectWebsites(url);
+
+        // Get last release date.
+        let lastDate = await website.getContentPage(url)
+        .then(async (doc) => website.getLastReleaseDate(doc))
+        .catch((err) => {
+            console.log("Error: " + err);
+            return "N/A";
+        });
+
+        // DEBUG
+        if (this.DEBUG) console.log("Last date: " + lastDate);
+
+        return lastDate;
     }
 }

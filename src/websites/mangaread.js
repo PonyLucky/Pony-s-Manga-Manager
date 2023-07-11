@@ -47,7 +47,7 @@ class Mangaread {
             mangaChapterInfo.status = this.getStatus(doc);
             // Get genres
             mangaChapterInfo.genres = this.getGenres(doc);
-            // Get last realease date
+            // Get last release date
             mangaChapterInfo.lastDate = this.getLastReleaseDate(doc);
             // Get description
             mangaChapterInfo.description = this.getDescription(doc);
