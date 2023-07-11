@@ -21,7 +21,9 @@ class Chapters {
         // -- Add each chapter to list
         let chapterList = document.createElement("ul");
         history.chapters.forEach((chapter) => {
-            chapterList.appendChild(this.addChapter(chapter));
+            chapterList.appendChild(
+                this.addChapter(history.url, chapter)
+            );
         });
         chapters.appendChild(chapterList);
         // -- Add buttons to go back to mangaList
@@ -37,12 +39,12 @@ class Chapters {
         buttonContainer.appendChild(backButton);
         chapters.appendChild(buttonContainer);
     }
-    addChapter(chapter) {
+    addChapter(baseUrl, chapter) {
         let item = document.createElement("li");
         item.textContent = "Chapter " + chapter;
         item.title = "Click to open chapter";
         item.onclick = () => {
-            let url = history.url + "chapter-" + chapter;
+            let url = baseUrl + "chapter-" + chapter;
             // Open new tab
             browser.tabs.create({url: url});
             // Close popup
