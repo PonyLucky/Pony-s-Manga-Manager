@@ -71,8 +71,10 @@ class Events {
                 let mangaHistory = JSON.parse(event.target.result);
                 // Save mangaHistory
                 browser.storage.local.set({mangaHistory: mangaHistory});
+                // Clear mangaCovers
+                browser.storage.local.set({mangaCovers: {}});
                 // Populate mangaList
-                (new MangaHistory).populate(mangaHistory);
+                (new MangaHistory).populate(mangaHistory, {});
             };
             reader.readAsText(file);
         });
@@ -86,6 +88,8 @@ class Events {
     static clear() {
         // Clear mangaHistory
         browser.storage.local.set({mangaHistory: []});
+        // Clear mangaCovers
+        browser.storage.local.set({mangaCovers: {}});
         // Clear mangaList
         (new MangaHistory).populate([]);
     }

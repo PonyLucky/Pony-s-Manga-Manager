@@ -3,16 +3,23 @@
 // -----------------------------
 
 try {
-    // Populate
-    browser.storage.local.get("mangaHistory", (data) => {
-        (new MangaHistory()).populate(data.mangaHistory);
+    browser.storage.local.get("mangaHistory", async (data) => {
+        // Get data
+        let mangaHistory = data.mangaHistory || [];
+        let mangaCovers = await browser.storage.local.get("mangaCovers")
+        .then((res) => res.mangaCovers)
+        .catch(() => {}) || {};
+
+        // Populate mangaHistory
+        (new MangaHistory()).populate(mangaHistory, mangaCovers);
     });
 }
 catch (e) {
     console.log(e);
     // DEBUG
     const data = mangaHistoryData || [];
-    (new MangaHistory(true)).populate(data);
+    const covers = mangaCoversData || {};
+    (new MangaHistory(true)).populate(data, covers);
 }
 
 // -----------------------------
