@@ -52,7 +52,10 @@ class Chapters {
         };
         return item;
     }
-    async fetch(url, number) {
+    async fetch(manga, isCoverMissing) {
+        let url = manga.url;
+        let number = manga.chapters[0];
+
         // DEBUG
         if (this.DEBUG) {
             console.log("URL: " + url);
@@ -64,8 +67,8 @@ class Chapters {
 
         // Get chapters.
         let mangaChapters = await website.getChapters(url)
-            .then(chapters => chapters)
-            .catch(() => []);
+        .then(chapters => chapters)
+        .catch(() => []);
 
         // DEBUG
         if (this.DEBUG) console.log(mangaChapters);
@@ -80,7 +83,23 @@ class Chapters {
 
         // Return null if chapter not found.
         if (index == -1) return 0;
-        // Return number of new chapters.
-        return index;
+
+        let mangaCover = "";
+        if (isCoverMissing === true) {
+            // Get manga cover.
+            mangaCover = await website.getContentPage(url)
+            .then(async (doc) => {
+                return await website.getCover(doc)
+                .then(cover => cover)
+                .catch(() => "");
+            })
+            .catch(() => "");
+        }
+
+        // Return data
+        return {
+            newChaptersNumber: index,
+            cover: mangaCover
+        }
     }
 }
