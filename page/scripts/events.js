@@ -86,6 +86,8 @@ class Events {
     static clear() {
         // Clear mangaHistory
         browser.storage.local.set({mangaHistory: []});
+        // Clear mangaCovers
+        browser.storage.local.set({mangaCovers: {}});
         // Clear mangaList
         (new MangaHistory).populate([]);
     }

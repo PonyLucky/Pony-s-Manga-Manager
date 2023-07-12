@@ -5,7 +5,7 @@ class MangaHistory {
         this.mangaInfo = new MangaInfo(this.DEBUG);
         this.target = document.getElementById("manga-list");
     }
-    populate(mangaHistory) {
+    populate(mangaHistory, mangaCovers) {
         // Clear
         clear(this.target);
     
@@ -19,7 +19,10 @@ class MangaHistory {
     
         // Add manga to this.target
         this.sort(mangaHistory).forEach(
-            (manga) => this.addManga(manga)
+            (manga) => {
+                let cover = mangaCovers[manga.manga] || "";
+                this.addManga(manga, cover);
+            }
         );
 
         // If DEBUG, click on first manga
@@ -27,7 +30,7 @@ class MangaHistory {
             this.target.children[0].click();
         }
     }
-    addManga(manga) {
+    addManga(manga, cover) {
         let mangaItem = document.createElement("div");
         mangaItem.classList.add("manga-item");
         // Click
@@ -36,7 +39,7 @@ class MangaHistory {
         });
 
         let mangaCover = document.createElement("img");
-        mangaCover.src = manga.cover;
+        mangaCover.src = cover;
         mangaItem.appendChild(mangaCover);
 
         // Add title
