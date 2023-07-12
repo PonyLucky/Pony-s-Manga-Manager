@@ -13,7 +13,7 @@ class MangaInfo {
         this.lastUpdate = document.getElementById("manga-info-details-last-update");
         this.description = document.getElementById("manga-info-description");
     }
-    update(manga) {
+    update(manga, cover) {
         // DEBUG
         if (this.DEBUG) console.log(
             "MangaInfo.update: "
@@ -21,7 +21,7 @@ class MangaInfo {
         );
 
         // Update manga info
-        this.cover.src = manga.cover;
+        this.cover.src = cover;
         this.title.innerText = manga.manga;
         this.author.innerText = manga.author;
         this.status.innerText = manga.status;

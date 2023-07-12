@@ -35,7 +35,8 @@ class MangaHistory {
         mangaItem.classList.add("manga-item");
         // Click
         mangaItem.addEventListener("click", () => {
-            this.mangaInfo.update(manga);
+            let coverImg = mangaItem.getElementsByTagName("img")[0];
+            this.mangaInfo.update(manga, coverImg.src);
         });
 
         let mangaCover = document.createElement("img");
