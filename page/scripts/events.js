@@ -51,6 +51,8 @@ class Events {
             dlLink.click();
             // Remove link
             document.body.removeChild(dlLink);
+            // Run settings
+            Events.settings();
         });
     }
     static upload() {
@@ -79,6 +81,8 @@ class Events {
                 browser.storage.local.set({mangaCovers: {}});
                 // Populate mangaList
                 (new MangaHistory).populate(mangaHistory, {});
+                // Run settings
+                Events.settings();
             };
             reader.readAsText(file);
         });
@@ -96,6 +100,8 @@ class Events {
         browser.storage.local.set({mangaCovers: {}});
         // Clear mangaList
         (new MangaHistory).populate([]);
+        // Run settings
+        Events.settings();
     }
     static read() {
         let read = document.getElementById("manga-info-read");
