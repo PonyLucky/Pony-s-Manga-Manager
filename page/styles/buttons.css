@@ -1,36 +1,76 @@
 div.buttons {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px;
+    border-bottom: 1px solid #424242;
+    background-color: inherit;
+    z-index: 100;
 }
 
 button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #2196f3;
-    color: #fff;
+    background-color: #00000000;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    outline: none;
+    color: #2196f3;
+}
+
+button img {
+    width: 25px;
+    height: 25px;
+    /* https://codepen.io/sosuke/pen/Pjoqqp */
+    /* #2196f3 */
+    filter: invert(43%) sepia(80%) saturate(1457%) hue-rotate(185deg) brightness(99%) contrast(92%);
 }
 
 button:hover {
-    background-color: #1e88e5;
+    color: #1e88e5;
+}
+
+button:hover img {
+    /* #1e88e5 */
+    filter: invert(35%) sepia(89%) saturate(976%) hue-rotate(181deg) brightness(103%) contrast(90%);
 }
 
 button:active {
-    background-color: #1976d2;
+    color: #1976d2;
+}
+
+button:active img {
+    /* #1976d2 */
+    filter: invert(34%) sepia(90%) saturate(1036%) hue-rotate(185deg) brightness(93%) contrast(95%);
 }
 
 button.red {
-    background-color: #f44336;
+    color: #f44336;
+}
+
+button.red img {
+    /* #f44336 */
+    filter: invert(48%) sepia(36%) saturate(6382%) hue-rotate(335deg) brightness(92%) contrast(109%);
 }
 
 button.red:hover {
-    background-color: #e53935;
+    color: #e53935;
+}
+
+button.red:hover img {
+    /* #e53935 */
+    filter: invert(22%) sepia(73%) saturate(3000%) hue-rotate(350deg) brightness(96%) contrast(101%);
 }
 
 button.red:active {
-    background-color: #d32f2f;
+    color: #d32f2f;
+}
+
+button.red:active img {
+    /* #d32f2f */
+    filter: invert(22%) sepia(73%) saturate(2459%) hue-rotate(350deg) brightness(96%) contrast(101%);
 }

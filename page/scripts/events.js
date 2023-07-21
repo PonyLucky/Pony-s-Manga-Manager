@@ -10,10 +10,14 @@ class Events {
         // Manga info buttons
         document.getElementById("manga-info-read")
             .addEventListener("click", Events.read);
-        document.getElementById("manga-info-back")
-            .addEventListener("click", Events.infoBack);
         document.getElementsByClassName("manga-info-details-chapters")[0]
             .addEventListener("click", Events.infoChapters);
+        // Settings button
+        document.getElementById("settings-button")
+            .addEventListener("click", Events.settings);
+        // Back button
+        document.getElementById("back-button")
+            .addEventListener("click", Events.back);
     }
     static save() {
         // Save mangaHistory to json file
@@ -101,17 +105,94 @@ class Events {
         // Close popup
         window.close();
     }
-    static infoBack() {
-        // Toggle mangaInfo and mangaList
-        toggle(document.getElementById("manga-info"), true);
-        toggle(document.getElementById("manga-list"), false);
-        // Toggle buttons
-        toggle(document.getElementsByClassName("buttons")[0], false);
-    }
     static infoChapters() {
         let info = document.getElementById("manga-info");
         let data = JSON.parse(info.dataset.manga);
         console.log(data);
         (new Chapters).list(data);
+    }
+    static settings() {
+        let settings = document.getElementById("settings");
+        let mList = document.getElementById("manga-list");
+        let mInfo = document.getElementById("manga-info");
+        let mChapters = document.getElementById("manga-chapters");
+        let back = document.getElementById("back-button");
+
+        // Check which element is visible
+        if (!mList.classList.contains("hide")) {
+            // Toggle mangaList and settings
+            toggle(mList, true);
+            toggle(back, false);
+            toggle(settings, false);
+            // Save to dataset
+            settings.dataset.elmt = mList.id;
+        }
+        else if (!mInfo.classList.contains("hide")) {
+            // Toggle mangaInfo and settings
+            toggle(mInfo, true);
+            toggle(back, false);
+            toggle(settings, false);
+            // Save to dataset
+            settings.dataset.elmt = mInfo.id;
+        }
+        else if (!mChapters.classList.contains("hide")) {
+            // Toggle mangaChapters and settings
+            toggle(mChapters, true);
+            toggle(back, false);
+            toggle(settings, false);
+            // Save to dataset
+            settings.dataset.elmt = mChapters.id;
+        }
+        // Else means settings is visible
+        else if (settings.dataset.elmt) {
+            // Toggle settings and previous element
+            toggle(settings, true);
+            toggle(
+                document.getElementById(settings.dataset.elmt),
+                false
+            );
+            if (settings.dataset.elmt === "manga-list") {
+                toggle(back, true);
+            }
+            // Clear dataset
+            settings.dataset.elmt = "";
+        }
+
+        // Toggle settings sections
+        let elmt = settings.dataset.elmt;
+        // Get children
+        let children = settings.children;
+        // For each, if dataset.elmt is not equal to elmt, hide
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].dataset.elmt === elmt) {
+                toggle(children[i], false);
+            }
+            else toggle(children[i], true);
+        }
+    }
+    static back() {
+        let back = document.getElementById("back-button");
+        let mInfo = document.getElementById("manga-info");
+        let mChapters = document.getElementById("manga-chapters");
+        let settings = document.getElementById("settings");
+
+        // If chapter visible, hide it and show mangaInfo
+        if (!mChapters.classList.contains("hide")) {
+            // Toggle mangaInfo and mangaChapters
+            toggle(mInfo, false);
+            toggle(mChapters, true);
+        }
+        // If mangaInfo visible, hide it and show mangaList
+        else if (!mInfo.classList.contains("hide")) {
+            // Toggle mangaList and mangaInfo
+            toggle(document.getElementById("manga-list"), false);
+            toggle(mInfo, true);
+            // Hide back button
+            toggle(back, true);
+        }
+        // If settings visible, run settings function
+        else if (!settings.classList.contains("hide")) {
+            Events.settings();
+        }
     }
 }

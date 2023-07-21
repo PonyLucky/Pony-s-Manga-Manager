@@ -26,18 +26,6 @@ class Chapters {
             );
         });
         chapters.appendChild(chapterList);
-        // -- Add buttons to go back to mangaList
-        let buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("buttons");
-        buttonContainer.classList.add("flex");
-        let backButton = document.createElement("button");
-        backButton.textContent = "Back";
-        backButton.addEventListener("click", () => {
-            toggle(chapters, true);
-            toggle(document.getElementById("manga-info"), false);
-        });
-        buttonContainer.appendChild(backButton);
-        chapters.appendChild(buttonContainer);
     }
     addChapter(baseUrl, chapter) {
         let item = document.createElement("li");

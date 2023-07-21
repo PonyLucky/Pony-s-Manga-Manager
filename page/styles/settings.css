@@ -1,0 +1,23 @@
+#settings h3 {
+    font-size: 1.5em;
+    margin: 0.5em 0;
+    text-align: center;
+}
+
+#settings h4 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    /* Top bar */
+    border-top: 1px solid #424242;
+    padding-top: 1em;
+}
+
+#settings button {
+    display: block;
+    margin: 0.5em 0.5em;
+    padding: 0.5em;
+    font-size: 1em;
+    width: 100%;
+    /* Bottom bar */
+    border-bottom: 1px solid #424242;
+}

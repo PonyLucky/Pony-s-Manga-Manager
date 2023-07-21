@@ -6,11 +6,13 @@
 }
 
 body {
-    background-color: #303030;
     font-family: Arial, sans-serif;
-    padding: 20px;
     margin: 0;
+    padding: 0;
+    padding-top: 40px;
     overflow-y: scroll;
+    background-color: #1e1e1e;
+    color: #fff;
 
     /* Var size */
     --size-width: 100vw;
@@ -23,19 +25,9 @@ body {
 
 .main {
     width: 100%;
-    height: calc(var(--size-height) - 100px);
     overflow-y: scroll;
-
-    /* Scrollbar */
     scrollbar-width: thin;
     scrollbar-color: #424242 #303030;
-
-    /* Background color */
-    background-color: #1e1e1e;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: #fff;
-
-    /* Padding */
     padding: 20px;
+    margin-top: 25px;
 }

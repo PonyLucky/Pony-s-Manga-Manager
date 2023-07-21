@@ -25,9 +25,10 @@ class MangaHistory {
             }
         );
 
-        // If DEBUG, click on first manga
         if (this.DEBUG) {
-            this.target.children[0].click();
+            console.log("DEBUG");
+            // Click on first manga
+            // this.target.children[0].click();
         }
     }
     addManga(manga, cover) {
