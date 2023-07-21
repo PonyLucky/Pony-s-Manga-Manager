@@ -7,9 +7,6 @@
 #settings h4 {
     font-size: 1.2em;
     margin: 0.5em 0;
-    /* Top bar */
-    border-top: 1px solid #424242;
-    padding-top: 1em;
 }
 
 #settings button {
@@ -20,4 +17,34 @@
     width: 100%;
     /* Bottom bar */
     border-bottom: 1px solid #424242;
+
+    /* Flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+#settings h3 + div > button:last-child {
+    border-bottom: none;
+}
+
+/* pre, means not yet implemented */
+#settings pre {
+    display: block;
+    font-size: 2em;
+    width: 100%;
+
+    /* Flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Width greater than 600px */
+@media (min-width: 600px) {
+    #settings > div {
+        width: 600px;
+        margin: 0 auto;
+    }
 }
