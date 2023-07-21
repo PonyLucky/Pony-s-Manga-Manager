@@ -170,7 +170,8 @@ class Events {
         let children = settings.children;
         // For each, if dataset.elmt is not equal to elmt, hide
         for (let i = 0; i < children.length; i++) {
-            if (children[i].dataset.elmt === elmt) {
+            let child = children[i];
+            if (child.dataset.elmt === elmt || child.tagName !== "DIV") {
                 toggle(children[i], false);
             }
             else toggle(children[i], true);
