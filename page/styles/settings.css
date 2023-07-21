@@ -25,7 +25,7 @@
     gap: 0.5em;
 }
 
-#settings h3 + div > button:last-child {
+#settings > div > button:last-child {
     border-bottom: none;
 }
 

@@ -1,23 +1,23 @@
 class Events {
     static init() {
-        // Settings buttons
-        document.getElementById("save-button")
-            .addEventListener("click", Events.save);
-        document.getElementById("upload-button")
-            .addEventListener("click", Events.upload);
-        document.getElementById("clear-button")
-            .addEventListener("dblclick", Events.clear);
         // Manga info buttons
         document.getElementById("manga-info-read")
             .addEventListener("click", Events.read);
         document.getElementsByClassName("manga-info-details-chapters")[0]
             .addEventListener("click", Events.infoChapters);
-        // Settings button
-        document.getElementById("settings-button")
-            .addEventListener("click", Events.settings);
         // Back button
         document.getElementById("back-button")
-            .addEventListener("click", Events.back);
+        .addEventListener("click", Events.back);
+        // Settings buttons
+        document.getElementById("settings-button")
+            .addEventListener("click", Events.settings);
+        // -- Manga list
+        document.getElementById("save-list")
+            .addEventListener("click", Events.save);
+        document.getElementById("upload-list")
+            .addEventListener("click", Events.upload);
+        document.getElementById("clear-list")
+            .addEventListener("dblclick", Events.clear);
     }
     static save() {
         // Save mangaHistory to json file
