@@ -13,95 +13,14 @@ class Events {
             .addEventListener("click", Events.settings);
         // -- Manga list
         document.getElementById("save-list")
-            .addEventListener("click", Events.save);
+            .addEventListener("click", Events.saveList);
         document.getElementById("upload-list")
-            .addEventListener("click", Events.upload);
+            .addEventListener("click", Events.uploadList);
         document.getElementById("clear-list")
-            .addEventListener("dblclick", Events.clear);
-    }
-    static save() {
-        // Save mangaHistory to json file
-        browser.storage.local.get("mangaHistory", (data) => {
-            let mangaHistory = data.mangaHistory || [];
-
-            // Save only the last chapter read for each manga
-            let mangaHistoryTmp = [];
-            mangaHistory.forEach((manga) => {
-                let mangaTmp = manga;
-                mangaTmp.chapters = [manga.chapters[0]];
-                mangaHistoryTmp.push(mangaTmp);
-            });
-
-            // If mangaHistory is empty
-            if (!mangaHistoryTmp || mangaHistoryTmp.length === 0) {
-                console.log("No manga in history.");
-                return;
-            }
-
-            // Create dl link
-            let dlLink = document.createElement("a");
-            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(
-                JSON.stringify(mangaHistoryTmp, null, 4)
-            );
-            dlLink.download = "manga-history.json";
-            dlLink.style.display = "none";
-            // Add to body
-            document.body.appendChild(dlLink);
-            // Click link
-            dlLink.click();
-            // Remove link
-            document.body.removeChild(dlLink);
-            // Run settings
-            Events.settings();
-        });
-    }
-    static upload() {
-        // Create input element
-        let input = document.createElement("input");
-        input.type = "file";
-        input.accept = "application/json";
-        input.style.display = "none";
-        // Add event listener
-        input.addEventListener("change", (event) => {
-            // Get file
-            let file = event.target.files[0];
-            // Check if file is valid
-            if (!file || file.type !== "application/json") {
-                console.log("Invalid file.");
-                return;
-            }
-            // Read file
-            let reader = new FileReader();
-            reader.onload = (event) => {
-                // Parse file
-                let mangaHistory = JSON.parse(event.target.result);
-                // Save mangaHistory
-                browser.storage.local.set({mangaHistory: mangaHistory});
-                // Clear mangaCovers
-                browser.storage.local.set({mangaCovers: {}});
-                // Populate mangaList
-                (new MangaHistory).populate(mangaHistory, {});
-                // Run settings
-                Events.settings();
-            };
-            reader.readAsText(file);
-        });
-        // Add to body
-        document.body.appendChild(input);
-        // Click input
-        input.click();
-        // Remove input
-        document.body.removeChild(input);
-    }
-    static clear() {
-        // Clear mangaHistory
-        browser.storage.local.set({mangaHistory: []});
-        // Clear mangaCovers
-        browser.storage.local.set({mangaCovers: {}});
-        // Clear mangaList
-        (new MangaHistory).populate([]);
-        // Run settings
-        Events.settings();
+            .addEventListener("dblclick", Events.clearList);
+        // -- Manga info
+        document.getElementById("remove-info")
+            .addEventListener("dblclick", Events.removeInfo);
     }
     static read() {
         let read = document.getElementById("manga-info-read");
@@ -116,6 +35,31 @@ class Events {
         let data = JSON.parse(info.dataset.manga);
         console.log(data);
         (new Chapters).list(data);
+    }
+    static back() {
+        let back = document.getElementById("back-button");
+        let mInfo = document.getElementById("manga-info");
+        let mChapters = document.getElementById("manga-chapters");
+        let settings = document.getElementById("settings");
+
+        // If chapter visible, hide it and show mangaInfo
+        if (!mChapters.classList.contains("hide")) {
+            // Toggle mangaInfo and mangaChapters
+            toggle(mInfo, false);
+            toggle(mChapters, true);
+        }
+        // If mangaInfo visible, hide it and show mangaList
+        else if (!mInfo.classList.contains("hide")) {
+            // Toggle mangaList and mangaInfo
+            toggle(document.getElementById("manga-list"), false);
+            toggle(mInfo, true);
+            // Hide back button
+            toggle(back, true);
+        }
+        // If settings visible, run settings function
+        else if (!settings.classList.contains("hide")) {
+            Events.settings();
+        }
     }
     static settings() {
         let settings = document.getElementById("settings");
@@ -177,29 +121,118 @@ class Events {
             else toggle(children[i], true);
         }
     }
-    static back() {
-        let back = document.getElementById("back-button");
-        let mInfo = document.getElementById("manga-info");
-        let mChapters = document.getElementById("manga-chapters");
-        let settings = document.getElementById("settings");
+    static saveList() {
+        // Save mangaHistory to json file
+        browser.storage.local.get("mangaHistory", (data) => {
+            let mangaHistory = data.mangaHistory || [];
 
-        // If chapter visible, hide it and show mangaInfo
-        if (!mChapters.classList.contains("hide")) {
-            // Toggle mangaInfo and mangaChapters
-            toggle(mInfo, false);
-            toggle(mChapters, true);
-        }
-        // If mangaInfo visible, hide it and show mangaList
-        else if (!mInfo.classList.contains("hide")) {
-            // Toggle mangaList and mangaInfo
-            toggle(document.getElementById("manga-list"), false);
-            toggle(mInfo, true);
-            // Hide back button
-            toggle(back, true);
-        }
-        // If settings visible, run settings function
-        else if (!settings.classList.contains("hide")) {
+            // Save only the last chapter read for each manga
+            let mangaHistoryTmp = [];
+            mangaHistory.forEach((manga) => {
+                let mangaTmp = manga;
+                mangaTmp.chapters = [manga.chapters[0]];
+                mangaHistoryTmp.push(mangaTmp);
+            });
+
+            // If mangaHistory is empty
+            if (!mangaHistoryTmp || mangaHistoryTmp.length === 0) {
+                console.log("No manga in history.");
+                return;
+            }
+
+            // Create dl link
+            let dlLink = document.createElement("a");
+            dlLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(
+                JSON.stringify(mangaHistoryTmp, null, 4)
+            );
+            dlLink.download = "manga-history.json";
+            dlLink.style.display = "none";
+            // Add to body
+            document.body.appendChild(dlLink);
+            // Click link
+            dlLink.click();
+            // Remove link
+            document.body.removeChild(dlLink);
+            // Run settings
             Events.settings();
-        }
+        });
+    }
+    static uploadList() {
+        // Create input element
+        let input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+        input.style.display = "none";
+        // Add event listener
+        input.addEventListener("change", (event) => {
+            // Get file
+            let file = event.target.files[0];
+            // Check if file is valid
+            if (!file || file.type !== "application/json") {
+                console.log("Invalid file.");
+                return;
+            }
+            // Read file
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                // Parse file
+                let mangaHistory = JSON.parse(event.target.result);
+                // Save mangaHistory
+                browser.storage.local.set({mangaHistory: mangaHistory});
+                // Clear mangaCovers
+                browser.storage.local.set({mangaCovers: {}});
+                // Populate mangaList
+                (new MangaHistory).populate(mangaHistory, {});
+                // Run settings
+                Events.settings();
+            };
+            reader.readAsText(file);
+        });
+        // Add to body
+        document.body.appendChild(input);
+        // Click input
+        input.click();
+        // Remove input
+        document.body.removeChild(input);
+    }
+    static clearList() {
+        // Clear mangaHistory
+        browser.storage.local.set({mangaHistory: []});
+        // Clear mangaCovers
+        browser.storage.local.set({mangaCovers: {}});
+        // Clear mangaList
+        (new MangaHistory).populate([]);
+        // Run settings
+        Events.settings();
+    }
+    static removeInfo() {
+        /* Remove manga from history */
+        // Get mangaInfo
+        let mangaInfo = document.getElementById("manga-info");
+        // Get manga
+        let manga = JSON.parse(mangaInfo.dataset.manga);
+        // Get mangaHistory
+        browser.storage.local.get("mangaHistory", (data) => {
+            let mangaHistory = data.mangaHistory || [];
+            // Remove manga from mangaHistory
+            mangaHistory = mangaHistory.filter((m) => {
+                return m.manga !== manga.manga;
+            });
+            // Save mangaHistory
+            browser.storage.local.set({mangaHistory: mangaHistory});
+            // Clear manga from mangaCovers
+            browser.storage.local.get("mangaCovers", (data) => {
+                let mangaCovers = data.mangaCovers || {};
+                delete mangaCovers[manga.manga];
+                // Save mangaCovers
+                browser.storage.local.set({mangaCovers: mangaCovers});
+                // Populate mangaList
+                (new MangaHistory).populate(mangaHistory, mangaCovers);
+                // Run settings
+                Events.settings();
+                // Click back button
+                document.getElementById("back-button").click();
+            });
+        });
     }
 }
