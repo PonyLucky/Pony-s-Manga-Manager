@@ -25,9 +25,10 @@ class MangaHistory {
             }
         );
 
-        // If DEBUG, click on first manga
         if (this.DEBUG) {
-            this.target.children[0].click();
+            console.log("DEBUG");
+            // Click on first manga
+            // this.target.children[0].click();
         }
     }
     addManga(manga, cover) {
@@ -80,7 +81,10 @@ class MangaHistory {
         .then(async (res) => {
             // New chapters
             // -- If no new chapters
-            if (res.newChaptersNumber === 0) return;
+            if (
+                res.newChaptersNumber === 0
+                || res.newChaptersNumber === undefined
+            ) return;
             // -- Add new chapters to span
             newChaptersSpan.textContent = "+" + res.newChaptersNumber;
             // -- Show new chapters
@@ -89,7 +93,7 @@ class MangaHistory {
             // Cover
             // -- If cover is already set, don't update it.
             let cover = res.cover;
-            if (cover === "") return;
+            if (cover === "" || cover === undefined) return;
             // -- Update cover
             coverImg.src = cover;
             // -- Save cover

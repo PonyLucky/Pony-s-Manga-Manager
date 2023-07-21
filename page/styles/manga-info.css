@@ -42,6 +42,8 @@
     background-color: #004edf;
     border-radius: 30px;
     padding: 15px;
+    color: #fff;
+    margin-top: 20px;
 }
 
 #manga-info .manga-info-header button:hover {

@@ -57,8 +57,8 @@ class MangaInfo {
 
         // Hide mangaList
         toggle(document.getElementById("manga-list"), true);
-        // Hide buttons
-        toggle(document.getElementsByClassName("buttons")[0], true);
+        // Display back button
+        toggle(document.getElementById("back-button"), false);
         // Display manga info
         toggle(this.info, false);
     }

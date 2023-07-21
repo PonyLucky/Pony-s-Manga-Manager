@@ -21,15 +21,33 @@ Manga manager to manage current reading manga.
 
 1. Ordered by last read time.
 2. Save/Load to/from JSON file.
-3. Click on chapter number => open the full list of read chapters (for this manga).
-4. Click on item => open the last chapter page.
-5. Fetches asynchronously the number of new chapters.
+3. Manga info menu.
+4. Manga chapters menu.
+5. Fetches asynchronously the number of new chapters and the cover image (if different).
 
 ## Supported websites
 
 - [x] [Mangaread](https://www.mangaread.org/)
 - [x] [Mangakik](https://mangakik.biz/)
 - [x] [NeatManga](https://neatmangas.com/manga/)
+
+## Screenshots
+
+### Manga list menu
+
+![Manga list menu](screenshots/list.png)
+
+### Manga info menu
+
+![Manga info menu](screenshots/info.png)
+
+### Manga chapters menu
+
+![Manga chapters menu](screenshots/chapters.png)
+
+### Settings menu
+
+![Settings menu](screenshots/settings.png)
 
 ## Getting support
 
