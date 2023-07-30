@@ -74,24 +74,37 @@
         <h3>Settings</h3>
         <div class="hide" data-elmt="manga-list">
             <h4>Data</h4>
-            <button id="save-list">
-                <img src="icons/download.svg" alt="Save"/>
-                <span>Save</span>
-            </button>
-            <button id="upload-list">
-                <img src="icons/upload.svg" alt="Upload"/>
-                <span>Upload</span>
-            </button>
-            <button id="clear-list" class="red">
-                <img src="icons/trash.svg" alt="Clear"/>
-                <span>Clear</span>
-            </button>
+            <section>
+                <button id="save-list">
+                    <img src="icons/download.svg" alt="Save"/>
+                    <span>Save</span>
+                </button>
+                <button id="upload-list">
+                    <img src="icons/upload.svg" alt="Upload"/>
+                    <span>Upload</span>
+                </button>
+                <button id="clear-list" class="red">
+                    <img src="icons/trash.svg" alt="Clear"/>
+                    <span>Clear</span>
+                </button>
+            </section>
+            <h4>In Background</h4>
+            <section>
+                <div>
+                    <input type="checkbox" id="auto-add-checkbox"/>
+                    <label for="auto-add-checkbox">
+                        Add new manga automatically
+                    </label>
+                </div>
+            </section>
         </div>
         <div class="hide" data-elmt="manga-info">
-            <button id="remove-info" class="red">
-                <img src="icons/trash.svg" alt="Remove"/>
-                <span>Remove</span>
-            </button>
+            <section>
+                <button id="remove-info" class="red">
+                    <img src="icons/trash.svg" alt="Remove"/>
+                    <span>Remove</span>
+                </button>
+            </section>
         </div>
         <div class="hide" data-elmt="manga-chapters">
             <pre>Not yet implemented</pre>
