@@ -80,7 +80,7 @@ async function updateMangaHistory(mangaChapterInfo) {
         .catch(() => {}) || {};
 
         let autoAdd = false;
-        if (mangaSettings && 'autoAdd' in mangaSettings) {
+        if ('autoAdd' in mangaSettings) {
             if (mangaSettings.autoAdd === true) autoAdd = true;
         }
         else autoAdd = true;
