@@ -4,6 +4,9 @@
 
 try {
     browser.storage.local.get("mangaHistory", async (data) => {
+        // Init settings
+        await initSettings();
+
         // Get data
         let mangaHistory = data.mangaHistory || [];
         let mangaCovers = await browser.storage.local.get("mangaCovers")
@@ -28,3 +31,18 @@ catch (e) {
 
 // Initialize events
 Events.init();
+
+// -----------------------------
+// Manga Settings
+// -----------------------------
+
+async function initSettings() {
+    // Get mangaSettings from storage.
+    let mangaSettings = await browser.storage.local.get("mangaSettings")
+    .then((res) => res.mangaSettings || {})
+    .catch(() => {});
+
+    // Initialize auto-add-checkbox
+    let autoAddCheckbox = document.getElementById("auto-add-checkbox");
+    autoAddCheckbox.checked = mangaSettings.autoAdd || false;
+}
