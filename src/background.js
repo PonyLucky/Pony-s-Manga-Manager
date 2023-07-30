@@ -74,10 +74,29 @@ async function updateMangaHistory(mangaChapterInfo) {
         // DEBUG
         if (DEBUG) console.log("Manga is not in mangaHistory.");
 
-        // Update cover.
-        updateMangaCovers(mangaChapterInfo);
-        // Add manga to mangaHistory.
-        mangaHistory.unshift(mangaChapterInfo);
+        // Check if mangaSettings exists and has true at 'autoAdd'.
+        let mangaSettings = await browser.storage.local.get("mangaSettings")
+        .then((res) => res.mangaSettings)
+        .catch(() => {}) || {};
+
+        let autoAdd = false;
+        if (mangaSettings && 'autoAdd' in mangaSettings) {
+            if (mangaSettings.autoAdd === true) autoAdd = true;
+        }
+        else autoAdd = true;
+
+        // If autoAdd is true.
+        if (autoAdd) {
+            // Update cover.
+            updateMangaCovers(mangaChapterInfo);
+            // Add manga to mangaHistory.
+            mangaHistory.unshift(mangaChapterInfo);
+        }
+        else {
+            // DEBUG
+            if (DEBUG) console.log("Auto add is false.");
+            return;
+        }
     }
 
     // DEBUG
