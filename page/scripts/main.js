@@ -16,15 +16,12 @@ try {
         // Get mangaCovers asynchonously
         browser.storage.local.get("mangaCovers")
         .then(async (res) => mangaHistory.fillCovers(res.mangaCovers || {}))
-        .catch(() => {});
+        .catch(() => mangaHistory.fillCovers({}));
     });
 }
 catch (e) {
+    console.log("NOT AS EXTENSION!!!");
     console.log(e);
-    // DEBUG
-    const data = mangaHistoryData || [];
-    const covers = mangaCoversData || {};
-    (new MangaHistory(true)).populate(data, covers);
 }
 
 // -----------------------------
