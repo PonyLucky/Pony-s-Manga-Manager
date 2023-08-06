@@ -16,7 +16,7 @@ class MangaHistory {
             this.target.appendChild(emptyMessage);
             return;
         }
-    
+
         // Add manga to this.target
         this.sort(mangaHistory).forEach(
             (manga) => {
@@ -30,8 +30,12 @@ class MangaHistory {
             // Click on first manga
             // this.target.children[0].click();
         }
+
+        // Lazyload
+        lazyload();
     }
     addManga(manga, cover) {
+        let mangaFragment = document.createDocumentFragment();
         let mangaItem = document.createElement("div");
         mangaItem.classList.add("manga-item");
         // Click
@@ -41,7 +45,8 @@ class MangaHistory {
         });
 
         let mangaCover = document.createElement("img");
-        mangaCover.src = cover;
+        mangaCover.setAttribute("data-src", cover);
+        mangaCover.classList.add("lazyload");
         mangaItem.appendChild(mangaCover);
 
         // Add title
@@ -58,8 +63,11 @@ class MangaHistory {
         // Fetch new data asynchronously
         this.fetch(manga, mangaItem);
 
+        // Append to fragment
+        mangaFragment.appendChild(mangaItem);
+
         // Append to target
-        this.target.appendChild(mangaItem);
+        this.target.appendChild(mangaFragment);
     }
     sort(mangaHistory) {
         let tmp = mangaHistory || [];
@@ -69,12 +77,12 @@ class MangaHistory {
         });
         return tmp;
     }
-    fetch(manga, target) {
+    async fetch(manga, target) {
         let newChaptersSpan = target.getElementsByTagName("span")[0];
         let coverImg = target.getElementsByTagName("img")[0];
         let isCoverMissing = (
-            coverImg.src.length === 0
-            || coverImg.src.endsWith(".html")
+            coverImg.getAttribute("data-src").length === 0
+            || coverImg.getAttribute("data-src").endsWith(".html")
         );
 
         this.chapters.fetch(manga, isCoverMissing)
