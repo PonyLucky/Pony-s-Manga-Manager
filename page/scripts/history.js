@@ -5,7 +5,7 @@ class MangaHistory {
         this.mangaInfo = new MangaInfo(this.DEBUG);
         this.target = document.getElementById("manga-list");
     }
-    populate(mangaHistory, mangaCovers) {
+    populate(mangaHistory) {
         // Clear
         clear(this.target);
     
@@ -16,13 +16,10 @@ class MangaHistory {
             this.target.appendChild(emptyMessage);
             return;
         }
-    
+
         // Add manga to this.target
         this.sort(mangaHistory).forEach(
-            (manga) => {
-                let cover = mangaCovers[manga.manga] || "";
-                this.addManga(manga, cover);
-            }
+            (manga) => this.addManga(manga)
         );
 
         if (this.DEBUG) {
@@ -31,17 +28,21 @@ class MangaHistory {
             // this.target.children[0].click();
         }
     }
-    addManga(manga, cover) {
+    addManga(manga) {
+        let mangaFragment = document.createDocumentFragment();
         let mangaItem = document.createElement("div");
         mangaItem.classList.add("manga-item");
-        // Click
+        mangaItem.setAttribute("data-manga", JSON.stringify(manga));
+
+        // Event on click
         mangaItem.addEventListener("click", () => {
             let coverImg = mangaItem.getElementsByTagName("img")[0];
-            this.mangaInfo.update(manga, coverImg.src);
+            let coverUrl = coverImg.getAttribute("data-src");
+            this.mangaInfo.update(manga, coverUrl);
         });
 
         let mangaCover = document.createElement("img");
-        mangaCover.src = cover;
+        mangaCover.classList.add("lazyload");
         mangaItem.appendChild(mangaCover);
 
         // Add title
@@ -55,11 +56,11 @@ class MangaHistory {
         newChapters.textContent = "0";
         mangaItem.appendChild(newChapters);
 
-        // Fetch new data asynchronously
-        this.fetch(manga, mangaItem);
+        // Append to fragment
+        mangaFragment.appendChild(mangaItem);
 
         // Append to target
-        this.target.appendChild(mangaItem);
+        this.target.appendChild(mangaFragment);
     }
     sort(mangaHistory) {
         let tmp = mangaHistory || [];
@@ -69,12 +70,39 @@ class MangaHistory {
         });
         return tmp;
     }
-    fetch(manga, target) {
+    fillCovers(mangaCovers) {
+        // For each manga in target
+        let mangas = this.target.getElementsByClassName("manga-item");
+        for (let manga of mangas) {
+            // Get manga title
+            let mangaTitle = JSON.parse(
+                manga.getAttribute("data-manga")
+            ).manga;
+            // Get cover
+            let cover = mangaCovers[mangaTitle] || "";
+            // Set cover
+            let coverImg = manga.getElementsByTagName("img")[0];
+            coverImg.setAttribute("data-src", cover);
+        }
+
+        // Lazyload
+        lazyload();
+
+        // Fetch new chapters or covers
+        for (let manga of mangas) {
+            this.fetch(
+                JSON.parse(manga.getAttribute("data-manga")),
+                manga
+            );
+        }
+    }
+    async fetch(manga, target) {
         let newChaptersSpan = target.getElementsByTagName("span")[0];
         let coverImg = target.getElementsByTagName("img")[0];
+        let coverUrl = coverImg.getAttribute("data-src");
         let isCoverMissing = (
-            coverImg.src.length === 0
-            || coverImg.src.endsWith(".html")
+            coverUrl.length === 0
+            || coverUrl.endsWith(".html")
         );
 
         this.chapters.fetch(manga, isCoverMissing)
@@ -82,26 +110,28 @@ class MangaHistory {
             // New chapters
             // -- If no new chapters
             if (
-                res.newChaptersNumber === 0
-                || res.newChaptersNumber === undefined
-            ) return;
-            // -- Add new chapters to span
-            newChaptersSpan.textContent = "+" + res.newChaptersNumber;
-            // -- Show new chapters
-            newChaptersSpan.classList.remove("invisible");
+                res.newChaptersNumber !== 0
+                && res.newChaptersNumber !== undefined
+            ) {
+                // -- Add new chapters to span
+                newChaptersSpan.textContent = "+" + res.newChaptersNumber;
+                // -- Show new chapters
+                newChaptersSpan.classList.remove("invisible");
+            }
 
             // Cover
             // -- If cover is already set, don't update it.
             let cover = res.cover;
-            if (cover === "" || cover === undefined) return;
-            // -- Update cover
-            coverImg.src = cover;
-            // -- Save cover
-            let mangaCovers = await browser.storage.local.get("mangaCovers")
-            .then((res) => res.mangaCovers)
-            .catch(() => {}) || {};
-            mangaCovers[manga.manga] = cover;
-            browser.storage.local.set({mangaCovers: mangaCovers});
+            if (cover !== "" && cover !== undefined) {
+                // -- Update cover
+                coverImg.src = cover;
+                // -- Save cover
+                let mangaCovers = await browser.storage.local.get("mangaCovers")
+                .then((res) => res.mangaCovers)
+                .catch(() => {}) || {};
+                mangaCovers[manga.manga] = cover;
+                browser.storage.local.set({mangaCovers: mangaCovers});
+            }
         });
     }
 }

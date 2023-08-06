@@ -4,25 +4,24 @@
 
 try {
     browser.storage.local.get("mangaHistory", async (data) => {
+        let start1 = new Date();
         // Init settings
         await initSettings();
 
-        // Get data
-        let mangaHistory = data.mangaHistory || [];
-        let mangaCovers = await browser.storage.local.get("mangaCovers")
-        .then((res) => res.mangaCovers)
-        .catch(() => {}) || {};
-
+        // Create mangaHistory
+        let mangaHistory = new MangaHistory();
         // Populate mangaHistory
-        (new MangaHistory()).populate(mangaHistory, mangaCovers);
+        mangaHistory.populate(data.mangaHistory || []);
+
+        // Get mangaCovers asynchonously
+        browser.storage.local.get("mangaCovers")
+        .then(async (res) => mangaHistory.fillCovers(res.mangaCovers || {}))
+        .catch(() => mangaHistory.fillCovers({}));
     });
 }
 catch (e) {
+    console.log("NOT AS EXTENSION!!!");
     console.log(e);
-    // DEBUG
-    const data = mangaHistoryData || [];
-    const covers = mangaCoversData || {};
-    (new MangaHistory(true)).populate(data, covers);
 }
 
 // -----------------------------

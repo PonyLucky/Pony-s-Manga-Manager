@@ -183,8 +183,11 @@ class Events {
                 browser.storage.local.set({mangaHistory: mangaHistory});
                 // Clear mangaCovers
                 browser.storage.local.set({mangaCovers: {}});
-                // Populate mangaList
-                (new MangaHistory).populate(mangaHistory, {});
+                // Create mangaHistory object
+                let mangaHistoryObj = new MangaHistory();
+                // Populate mangaList and covers
+                mangaHistoryObj.populate(mangaHistory);
+                mangaHistoryObj.fillCovers({});
                 // Run settings
                 Events.settings();
             };
@@ -203,7 +206,7 @@ class Events {
         // Clear mangaCovers
         browser.storage.local.set({mangaCovers: {}});
         // Clear mangaList
-        (new MangaHistory).populate([]);
+        (new MangaHistory()).populate([]);
         // Run settings
         Events.settings();
     }
@@ -228,8 +231,11 @@ class Events {
                 delete mangaCovers[manga.manga];
                 // Save mangaCovers
                 browser.storage.local.set({mangaCovers: mangaCovers});
-                // Populate mangaList
-                (new MangaHistory).populate(mangaHistory, mangaCovers);
+                // Create mangaHistory object
+                let mangaHistoryObj = new MangaHistory();
+                // Populate mangaList and fill covers
+                mangaHistoryObj.populate(mangaHistory);
+                mangaHistoryObj.fillCovers(mangaCovers);
                 // Run settings
                 Events.settings();
                 // Click back button
@@ -238,18 +244,14 @@ class Events {
         });
     }
     static async autoAdd() {
-        console.group("Auto add");
         // Get current mangaSettings if any
         let mangaSettings = await browser.storage.local.get("mangaSettings")
             .then((data) => {
                 return data.mangaSettings || {};
             }
         );
-        console.log("mangaSettings:");
-        console.log(mangaSettings);
         // Get autoAdd checkbox
         let autoAdd = document.getElementById("auto-add-checkbox");
-        console.log("autoAdd is now: " + autoAdd.checked);
         // If autoAdd is checked
         if (autoAdd.checked) {
             // Add mangaSettings.autoAdd
@@ -262,6 +264,5 @@ class Events {
         }
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
-        console.groupEnd();
     }
 }
