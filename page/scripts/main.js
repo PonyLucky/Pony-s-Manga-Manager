@@ -44,5 +44,8 @@ async function initSettings() {
 
     // Initialize auto-add-checkbox
     let autoAddCheckbox = document.getElementById("auto-add-checkbox");
-    autoAddCheckbox.checked = mangaSettings.autoAdd || true;
+    autoAddCheckbox.checked = true;
+    if ('autoAdd' in mangaSettings && mangaSettings.autoAdd === false) {
+        autoAddCheckbox.checked = false;
+    }
 }
