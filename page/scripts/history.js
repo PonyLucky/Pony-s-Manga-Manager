@@ -82,26 +82,28 @@ class MangaHistory {
             // New chapters
             // -- If no new chapters
             if (
-                res.newChaptersNumber === 0
-                || res.newChaptersNumber === undefined
-            ) return;
-            // -- Add new chapters to span
-            newChaptersSpan.textContent = "+" + res.newChaptersNumber;
-            // -- Show new chapters
-            newChaptersSpan.classList.remove("invisible");
+                res.newChaptersNumber !== 0
+                && res.newChaptersNumber !== undefined
+            ) {
+                // -- Add new chapters to span
+                newChaptersSpan.textContent = "+" + res.newChaptersNumber;
+                // -- Show new chapters
+                newChaptersSpan.classList.remove("invisible");
+            }
 
             // Cover
             // -- If cover is already set, don't update it.
             let cover = res.cover;
-            if (cover === "" || cover === undefined) return;
-            // -- Update cover
-            coverImg.src = cover;
-            // -- Save cover
-            let mangaCovers = await browser.storage.local.get("mangaCovers")
-            .then((res) => res.mangaCovers)
-            .catch(() => {}) || {};
-            mangaCovers[manga.manga] = cover;
-            browser.storage.local.set({mangaCovers: mangaCovers});
+            if (cover !== "" && cover !== undefined) {
+                // -- Update cover
+                coverImg.src = cover;
+                // -- Save cover
+                let mangaCovers = await browser.storage.local.get("mangaCovers")
+                .then((res) => res.mangaCovers)
+                .catch(() => {}) || {};
+                mangaCovers[manga.manga] = cover;
+                browser.storage.local.set({mangaCovers: mangaCovers});
+            }
         });
     }
 }
