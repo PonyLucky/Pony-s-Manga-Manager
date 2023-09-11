@@ -7,7 +7,10 @@ class Events {
             .addEventListener("click", Events.infoChapters);
         // Back button
         document.getElementById("back-button")
-        .addEventListener("click", Events.back);
+            .addEventListener("click", Events.back);
+        // Search input
+        document.getElementById("search-input")
+            .addEventListener("input", Events.search);
         // Settings buttons
         document.getElementById("settings-button")
             .addEventListener("click", Events.settings);
@@ -257,5 +260,41 @@ class Events {
         }
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
+    }
+    static search() {
+        // Get search input
+        let searchInput = document.getElementById("search-input");
+        // Get search value
+        let searchValue = searchInput.value;
+        // If search value is empty
+        if (searchValue === "") {
+            // Show all manga
+            let mangaItems = document.getElementsByClassName("manga-item");
+            for (let i = 0; i < mangaItems.length; i++) {
+                toggle(mangaItems[i], false);
+            }
+        }
+        // Else
+        else if (searchValue.length > 1) {
+            // Get mangaItems
+            let mangaItems = document.getElementsByClassName("manga-item");
+            // For each mangaItem
+            for (let i = 0; i < mangaItems.length; i++) {
+                // Get mangaItem
+                let mangaItem = mangaItems[i];
+                // Get manga title
+                let mangaTitle = mangaItem.getElementsByTagName("p")[0].textContent;
+                // If manga title contains search value
+                if (mangaTitle.toLowerCase().includes(searchValue.toLowerCase())) {
+                    // Show mangaItem
+                    toggle(mangaItem, false);
+                }
+                // Else
+                else {
+                    // Hide mangaItem
+                    toggle(mangaItem, true);
+                }
+            }
+        }
     }
 }

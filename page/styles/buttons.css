@@ -14,6 +14,10 @@ div.buttons {
     z-index: 100;
 }
 
+div.buttons > div {
+    min-width: 25px;
+}
+
 button {
     background-color: #00000000;
     border: none;
@@ -73,4 +77,38 @@ button.red:active {
 button.red:active img {
     /* #d32f2f */
     filter: invert(22%) sepia(73%) saturate(2459%) hue-rotate(350deg) brightness(96%) contrast(101%);
+}
+
+.b-icon {
+    padding-top: 1.75px;
+}
+
+/* Searchbar */
+
+div.buttons div#search-bar {
+    margin: 0 15px;
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: #424242;
+}
+
+div.buttons div#search-bar input {
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.buttons div#search-bar input:focus {
+    outline: none;
 }
