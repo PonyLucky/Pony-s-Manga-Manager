@@ -13,6 +13,7 @@ const THEMES = {
         ["--red-button-text-color-active", "#d32f2f"],
         ["--settings-checkbox-bg-color", "var(--scrollbar-track-color)"],
         ["--settings-checkbox-checked-color", "var(--text-color-body)"],
+        ["--manga-info-description-bg-color", "#404040"],
     ],
     "light": [
         ["--bg-color-body", "#fff"],
@@ -28,6 +29,7 @@ const THEMES = {
         ["--red-button-text-color-active", "#d32f2f"],
         ["--settings-checkbox-bg-color", "transparent"],
         ["--settings-checkbox-checked-color", "transparent"],
+        ["--manga-info-description-bg-color", "#f5f5f5"],
     ]
 }
 

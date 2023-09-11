@@ -5,9 +5,12 @@
     --bg-color-link: #004edf;
     --scrollbar-track-color: #303030;
     --scrollbar-thumb-color: #424242;
-    --chapters-list-bg-color: var(--bg-color-link);
-    --chapters-list-item-bg-color-hover: var(--scrollbar-track-color);
     --settings-section-bottom-bar-color: var(--scrollbar-track-color);
+    --manga-info-button-bg-color: var(--button-text-color);
+    --manga-info-button-bg-color-hover: var(--button-text-color-hover);
+    --manga-info-description-bg-color: #404040;
+    --chapters-list-bg-color: var(--manga-info-description-bg-color);
+    --chapters-list-item-bg-color-hover: var(--scrollbar-track-color);
 
     /* Text colors */
     --text-color-body: #fff;
@@ -18,9 +21,6 @@
     --red-button-text-color-hover: #e53935;
     --red-button-text-color-active: #d32f2f;
     --search-bar-input-text-color: var(--text-color-body);
-    --manga-info-button-bg-color: var(--button-text-color);
-    --manga-info-button-bg-color-hover: var(--button-text-color-hover);
-    --manga-info-description-bg-color: var(--bg-color-link);
 
     /* Input styles */
     --search-bar-bg-color: var(--scrollbar-track-color);
