@@ -39,8 +39,8 @@
     left: 80px;
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
-    background-color: #004edf;
+    color: var(--text-color-body);
+    background-color: var(--bg-color-link);
     padding: 5px;
     border-radius: 10px;
     text-align: right;

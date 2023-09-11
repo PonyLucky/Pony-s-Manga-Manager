@@ -1,3 +1,36 @@
+/* Color Variables for Theming */
+:root {
+    /* Background colors */
+    --bg-color-body: #1e1e1e;
+    --bg-color-link: #004edf;
+    --scrollbar-track-color: #303030;
+    --scrollbar-thumb-color: #424242;
+    --chapters-list-bg-color: var(--bg-color-link);
+    --chapters-list-item-bg-color-hover: var(--scrollbar-track-color);
+    --settings-section-bottom-bar-color: var(--scrollbar-track-color);
+
+    /* Text colors */
+    --text-color-body: #fff;
+    --button-text-color: #2196f3;
+    --button-text-color-hover: #1e88e5;
+    --button-text-color-active: #1976d2;
+    --red-button-text-color: #f44336;
+    --red-button-text-color-hover: #e53935;
+    --red-button-text-color-active: #d32f2f;
+    --search-bar-input-text-color: var(--text-color-body);
+    --manga-info-button-bg-color: var(--button-text-color);
+    --manga-info-button-bg-color-hover: var(--button-text-color-hover);
+    --manga-info-description-bg-color: var(--bg-color-link);
+
+    /* Input styles */
+    --search-bar-bg-color: var(--scrollbar-track-color);
+
+    /* Checkbox styles */
+    --settings-checkbox-border-color: var(--scrollbar-track-color);
+    --settings-checkbox-bg-color: var(--scrollbar-track-color);
+    --settings-checkbox-checked-color: var(--text-color-body);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,8 +44,8 @@ body {
     padding: 0;
     padding-top: 40px;
     overflow-y: scroll;
-    background-color: #1e1e1e;
-    color: #fff;
+    background-color: var(--bg-color-body);
+    color: var(--text-color-body);
 
     /* Var size */
     --size-width: 100vw;
@@ -27,7 +60,7 @@ body {
     width: 100%;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: #424242 #303030;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
     padding: 20px;
     margin-top: 25px;
 }
