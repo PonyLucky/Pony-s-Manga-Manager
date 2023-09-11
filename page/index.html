@@ -83,6 +83,11 @@
     <div id="settings" class="main hide">
         <h3>Settings</h3>
         <div class="hide" data-elmt="manga-list">
+            <h4>Theme</h4>
+            <section>
+                <form id="theme-form">
+                </form>
+            </section>
             <h4>Data</h4>
             <section>
                 <button id="save-list" title="Save your manga list in a file.">
@@ -132,13 +137,15 @@
 
     <!-- Scripts -->
     <!-- -- Utilities functions for next scripts -->
-    <script src="scripts/utils.js"></script>
     <!-- -- Class to handle chapters list -->
+    <script src="scripts/utils.js"></script>
     <script src="scripts/chapters.js"></script>
     <!-- -- Class to handle manga info tab -->
     <script src="scripts/mangaInfo.js"></script>
     <!-- -- Class to handle manga list -->
     <script src="scripts/history.js"></script>
+    <!-- Class to handle themes -->
+    <script src="scripts/themes.js"></script>
     <!-- -- To handle events -->
     <script src="scripts/events.js"></script>
     <!-- -- Main script -->

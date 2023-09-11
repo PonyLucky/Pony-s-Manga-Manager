@@ -23,6 +23,8 @@ class Events {
             .addEventListener("dblclick", Events.clearList);
         document.getElementById("auto-add-checkbox")
             .addEventListener("click", Events.autoAdd);
+        document.getElementById("theme-form")
+            .addEventListener("click", Events.theme);
         // -- Manga info
         document.getElementById("remove-info")
             .addEventListener("dblclick", Events.removeInfo);
@@ -242,21 +244,33 @@ class Events {
     static async autoAdd() {
         // Get current mangaSettings if any
         let mangaSettings = await browser.storage.local.get("mangaSettings")
-            .then((data) => {
-                return data.mangaSettings || {};
-            }
-        );
+            .then((data) => data.mangaSettings || {});
         // Get autoAdd checkbox
         let autoAdd = document.getElementById("auto-add-checkbox");
         // If autoAdd is checked
-        if (autoAdd.checked) {
-            // Add mangaSettings.autoAdd
-            mangaSettings.autoAdd = true;
-        }
-        // Else
-        else {
-            // Auto add is false
-            mangaSettings.autoAdd = false;
+        if (autoAdd.checked) mangaSettings.autoAdd = true;
+        else mangaSettings.autoAdd = false;
+        // Save mangaSettings
+        browser.storage.local.set({mangaSettings: mangaSettings});
+    }
+    static async theme() {
+        // Get current mangaSettings if any
+        let mangaSettings = await browser.storage.local.get("mangaSettings")
+            .then((data) => data.mangaSettings || {});
+        // Get theme form
+        let themeForm = document.getElementById("theme-form");
+        // Get theme radio buttons
+        let themeRadios = themeForm.elements.theme;
+        // For each theme radio
+        for (let i = 0; i < themeRadios.length; i++) {
+            // If theme radio is checked
+            if (themeRadios[i].checked) {
+                // Save theme
+                mangaSettings.theme = themeRadios[i].value;
+                // Apply theme
+                Themes.apply(themeRadios[i].value);
+                break;
+            }
         }
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
