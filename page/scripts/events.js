@@ -179,15 +179,15 @@ class Events {
             reader.onload = (event) => {
                 // Parse file
                 let mangaHistory = JSON.parse(event.target.result);
+                // Clear local storage
+                browser.storage.local.clear();
                 // Save mangaHistory
                 browser.storage.local.set({mangaHistory: mangaHistory});
-                // Clear mangaCovers
-                browser.storage.local.set({mangaCovers: {}});
                 // Create mangaHistory object
                 let mangaHistoryObj = new MangaHistory();
                 // Populate mangaList and covers
                 mangaHistoryObj.populate(mangaHistory);
-                mangaHistoryObj.fillCovers({});
+                mangaHistoryObj.fillCovers();
                 // Run settings
                 Events.settings();
             };
@@ -201,10 +201,8 @@ class Events {
         document.body.removeChild(input);
     }
     static clearList() {
-        // Clear mangaHistory
-        browser.storage.local.set({mangaHistory: []});
-        // Clear mangaCovers
-        browser.storage.local.set({mangaCovers: {}});
+        // Clear local storage
+        browser.storage.local.clear();
         // Clear mangaList
         (new MangaHistory()).populate([]);
         // Run settings
@@ -226,21 +224,16 @@ class Events {
             // Save mangaHistory
             browser.storage.local.set({mangaHistory: mangaHistory});
             // Clear manga from mangaCovers
-            browser.storage.local.get("mangaCovers", (data) => {
-                let mangaCovers = data.mangaCovers || {};
-                delete mangaCovers[manga.manga];
-                // Save mangaCovers
-                browser.storage.local.set({mangaCovers: mangaCovers});
-                // Create mangaHistory object
-                let mangaHistoryObj = new MangaHistory();
-                // Populate mangaList and fill covers
-                mangaHistoryObj.populate(mangaHistory);
-                mangaHistoryObj.fillCovers(mangaCovers);
-                // Run settings
-                Events.settings();
-                // Click back button
-                document.getElementById("back-button").click();
-            });
+            browser.storage.local.remove(manga.manga);
+            // Click back button
+            document.getElementById("back-button").click();
+            // Create mangaHistory object
+            let mangaHistoryObj = new MangaHistory();
+            // Populate mangaList and fill covers
+            mangaHistoryObj.populate(mangaHistory);
+            mangaHistoryObj.fillCovers();
+            // Run settings
+            Events.settings();
         });
     }
     static async autoAdd() {

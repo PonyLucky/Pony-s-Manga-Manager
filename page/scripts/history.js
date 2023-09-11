@@ -37,7 +37,7 @@ class MangaHistory {
         // Event on click
         mangaItem.addEventListener("click", () => {
             let coverImg = mangaItem.getElementsByTagName("img")[0];
-            let coverUrl = coverImg.getAttribute("data-src");
+            let coverUrl = coverImg.getAttribute("src");
             this.mangaInfo.update(manga, coverUrl);
         });
 
@@ -70,39 +70,37 @@ class MangaHistory {
         });
         return tmp;
     }
-    fillCovers(mangaCovers) {
+    async fillCovers() {
         // For each manga in target
         let mangas = this.target.getElementsByClassName("manga-item");
         for (let manga of mangas) {
+            let mangaData = JSON.parse(manga.getAttribute("data-manga"));
             // Get manga title
-            let mangaTitle = JSON.parse(
-                manga.getAttribute("data-manga")
-            ).manga;
+            let mangaTitle = mangaData.manga;
             // Get cover
-            let cover = mangaCovers[mangaTitle] || "";
-            // Set cover
-            let coverImg = manga.getElementsByTagName("img")[0];
-            coverImg.setAttribute("data-src", cover);
-        }
-
-        // Lazyload
-        lazyload();
-
-        // Fetch new chapters or covers
-        for (let manga of mangas) {
-            this.fetch(
-                JSON.parse(manga.getAttribute("data-manga")),
-                manga
-            );
+            browser.storage.local.get(mangaTitle)
+            .then((res) => {
+                let cover = res[mangaTitle];
+                // Set cover
+                let coverImg = manga.getElementsByTagName("img")[0];
+                coverImg.setAttribute("src", cover);
+                // Fetch new chapters and cover
+                this.fetch(mangaData, manga);
+            })
+            .catch(() => {
+                // Fetch new chapters and cover
+                this.fetch(mangaData, manga);
+            });
         }
     }
     async fetch(manga, target) {
         let newChaptersSpan = target.getElementsByTagName("span")[0];
         let coverImg = target.getElementsByTagName("img")[0];
-        let coverUrl = coverImg.getAttribute("data-src");
+        let coverUrl = coverImg.getAttribute("src");
         let isCoverMissing = (
             coverUrl.length === 0
             || coverUrl.endsWith(".html")
+            || coverUrl === "undefined"
         );
 
         this.chapters.fetch(manga, isCoverMissing)
@@ -126,11 +124,7 @@ class MangaHistory {
                 // -- Update cover
                 coverImg.src = cover;
                 // -- Save cover
-                let mangaCovers = await browser.storage.local.get("mangaCovers")
-                .then((res) => res.mangaCovers)
-                .catch(() => {}) || {};
-                mangaCovers[manga.manga] = cover;
-                browser.storage.local.set({mangaCovers: mangaCovers});
+                browser.storage.local.set({[manga.manga]: cover});
             }
         });
     }

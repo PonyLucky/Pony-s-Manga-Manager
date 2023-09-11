@@ -44,12 +44,6 @@ class Chapters {
         let url = manga.url;
         let number = manga.chapters[0];
 
-        // DEBUG
-        if (this.DEBUG) {
-            console.log("URL: " + url);
-            console.log("Number: " + number);
-        }
-
         // Strategy pattern to select website to use.
         let website = selectWebsites(url);
 
@@ -58,16 +52,10 @@ class Chapters {
         .then(chapters => chapters)
         .catch(() => []);
 
-        // DEBUG
-        if (this.DEBUG) console.log(mangaChapters);
-
         // Return null if no chapters.
         if (mangaChapters.length == 0) return 0;
         // Get index of chapter.
         let index = mangaChapters.indexOf(number);
-
-        // DEBUG
-        if (this.DEBUG) console.log(index);
 
         // Return null if chapter not found.
         if (index == -1) return 0;
@@ -82,6 +70,17 @@ class Chapters {
                 .catch(() => "");
             })
             .catch(() => "");
+        }
+
+        // DEBUG
+        if (this.DEBUG) {
+            console.group(manga.manga);
+            console.log("URL: " + url);
+            console.log("Current chapter: " + number + " (" + index + ")");
+            console.log("Chapters: ");
+            console.log(mangaChapters);
+            console.log("Cover: " + mangaCover);
+            console.groupEnd();
         }
 
         // Return data
