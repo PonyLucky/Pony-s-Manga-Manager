@@ -2,7 +2,7 @@
     font-size: 24px;
     margin-bottom: 10px;
     text-align: center;
-    color: #fff;
+    color: var(--text-color-body);
 }
 
 #manga-chapters ul {
@@ -11,21 +11,21 @@
     margin: 0;
 
     /* Background color */
-    background-color: #404040;
+    background-color: var(--chapters-list-bg-color);
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: #fff;
+    color: var(--text-color-body);
 }
 
 #manga-chapters li {
     font-size: 18px;
     padding: 15px;
     /* Bottom border */
-    border-bottom: 2px solid #1e1e1e;
+    border-bottom: 2px solid var(--bg-color-body);
 }
 
 #manga-chapters li:hover {
-    background-color: #303030;
+    background-color: var(--chapters-list-item-bg-color-hover);
     cursor: pointer;
 }
 

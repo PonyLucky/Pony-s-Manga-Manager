@@ -16,11 +16,9 @@
     font-size: 1em;
     width: 100%;
     /* Bottom bar */
-    border-bottom: 1px solid #424242;
-
+    border-bottom: 1px solid var(--settings-section-bottom-bar-color);
     /* Not selectable */
     user-select: none;
-
     /* Flex */
     display: flex;
     justify-content: center;
@@ -47,15 +45,14 @@
     display: block;
     width: 1em;
     height: 1em;
-    border: 1px solid #424242;
+    border: 1px solid var(--settings-checkbox-border-color);
     border-radius: 0.2em;
-    background-color: #424242;
+    background-color: var(--settings-checkbox-bg-color);
     transition: background-color 0.2s ease-in-out;
 }
 
 #settings section > * > input[type="checkbox"]:checked + label::before {
-    background-color: #fff;
-
+    background-color: var(--settings-checkbox-checked-color);
     /* Checkmark */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -72,7 +69,6 @@
     display: block;
     font-size: 2em;
     width: 100%;
-
     /* Flex */
     display: flex;
     justify-content: center;

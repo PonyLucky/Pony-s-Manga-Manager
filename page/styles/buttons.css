@@ -9,29 +9,32 @@ div.buttons {
     align-items: center;
 
     padding: 15px;
-    border-bottom: 1px solid #424242;
+    border-bottom: 1px solid var(--scrollbar-track-color);
     background-color: inherit;
     z-index: 100;
 }
 
+div.buttons > div {
+    min-width: 25px;
+}
+
 button {
-    background-color: #00000000;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     outline: none;
-    color: #2196f3;
+    color: var(--button-text-color);
 }
 
 button img {
     width: 25px;
     height: 25px;
     /* https://codepen.io/sosuke/pen/Pjoqqp */
-    /* #2196f3 */
     filter: invert(43%) sepia(80%) saturate(1457%) hue-rotate(185deg) brightness(99%) contrast(92%);
 }
 
 button:hover {
-    color: #1e88e5;
+    color: var(--button-text-color-hover);
 }
 
 button:hover img {
@@ -40,7 +43,7 @@ button:hover img {
 }
 
 button:active {
-    color: #1976d2;
+    color: var(--button-text-color-active);
 }
 
 button:active img {
@@ -49,7 +52,7 @@ button:active img {
 }
 
 button.red {
-    color: #f44336;
+    color: var(--red-button-text-color);
 }
 
 button.red img {
@@ -58,7 +61,7 @@ button.red img {
 }
 
 button.red:hover {
-    color: #e53935;
+    color: var(--red-button-text-color-hover);
 }
 
 button.red:hover img {
@@ -67,10 +70,44 @@ button.red:hover img {
 }
 
 button.red:active {
-    color: #d32f2f;
+    color: var(--red-button-text-color-active);
 }
 
 button.red:active img {
     /* #d32f2f */
     filter: invert(22%) sepia(73%) saturate(2459%) hue-rotate(350deg) brightness(96%) contrast(101%);
+}
+
+.b-icon {
+    padding-top: 1.75px;
+}
+
+/* Searchbar */
+
+div.buttons div#search-bar {
+    margin: 0 15px;
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: var(--search-bar-bg-color);
+}
+
+div.buttons div#search-bar input {
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--search-bar-input-text-color);
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.buttons div#search-bar input:focus {
+    outline: none;
 }

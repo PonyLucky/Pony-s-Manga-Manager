@@ -24,13 +24,23 @@
     <div class="buttons">
         <!-- Left -->
         <div>
-            <button id="back-button" class="hide" title="Back">
+            <button id="back-button" class="hide b-icon" title="Back">
                 <img src="icons/arrow-left.svg" alt="Back"/>
             </button>
         </div>
+        <!-- Center -->
+        <div>
+            <!-- Search bar -->
+            <div id="search-bar">
+                <input id="search-input" type="text" placeholder="Search"/>
+                <button id="search-button" class="b-icon" title="Search">
+                    <img src="icons/search.svg" alt="Search"/>
+                </button>
+            </div>
+        </div>
         <!-- Right -->
         <div>
-            <button id="settings-button" title="Settings">
+            <button id="settings-button" class="b-icon" title="Settings">
                 <img src="icons/gear.svg" alt="Settings"/>
             </button>
         </div>
@@ -73,6 +83,11 @@
     <div id="settings" class="main hide">
         <h3>Settings</h3>
         <div class="hide" data-elmt="manga-list">
+            <h4>Theme</h4>
+            <section>
+                <form id="theme-form">
+                </form>
+            </section>
             <h4>Data</h4>
             <section>
                 <button id="save-list" title="Save your manga list in a file.">
@@ -122,13 +137,15 @@
 
     <!-- Scripts -->
     <!-- -- Utilities functions for next scripts -->
-    <script src="scripts/utils.js"></script>
     <!-- -- Class to handle chapters list -->
+    <script src="scripts/utils.js"></script>
     <script src="scripts/chapters.js"></script>
     <!-- -- Class to handle manga info tab -->
     <script src="scripts/mangaInfo.js"></script>
     <!-- -- Class to handle manga list -->
     <script src="scripts/history.js"></script>
+    <!-- Class to handle themes -->
+    <script src="scripts/themes.js"></script>
     <!-- -- To handle events -->
     <script src="scripts/events.js"></script>
     <!-- -- Main script -->

@@ -45,4 +45,27 @@ async function initSettings() {
     if ('autoAdd' in mangaSettings && mangaSettings.autoAdd === false) {
         autoAddCheckbox.checked = false;
     }
+
+    // Initialize themes
+    let themes = Themes.list();
+    const currentTheme = mangaSettings.theme || "default";
+    let themeForm = document.getElementById("theme-form");
+    for (let i = 0; i < themes.length; i++) {
+        let theme = themes[i];
+        let themeRadio = document.createElement("input");
+        themeRadio.type = "radio";
+        themeRadio.id = theme;
+        themeRadio.name = "theme";
+        themeRadio.value = theme;
+        if (theme === currentTheme) {
+            themeRadio.checked = true;
+        }
+        themeForm.appendChild(themeRadio);
+        let themeLabel = document.createElement("label");
+        themeLabel.htmlFor = theme;
+        themeLabel.innerText = theme;
+        themeForm.appendChild(themeLabel);
+    }
+    // Apply theme
+    Themes.apply(currentTheme);
 }
