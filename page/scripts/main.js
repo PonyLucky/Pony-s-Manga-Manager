@@ -14,9 +14,7 @@ try {
         mangaHistory.populate(data.mangaHistory || []);
 
         // Get mangaCovers asynchonously
-        browser.storage.local.get("mangaCovers")
-        .then(async (res) => mangaHistory.fillCovers(res.mangaCovers || {}))
-        .catch(() => mangaHistory.fillCovers({}));
+        mangaHistory.fillCovers();
     });
 }
 catch (e) {

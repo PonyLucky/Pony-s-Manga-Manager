@@ -110,39 +110,16 @@ async function updateMangaHistory(mangaChapterInfo) {
 }
 
 async function updateMangaCovers(mangaChapterInfo) {
-    let mangaCovers = await browser.storage.local.get("mangaCovers")
-    .then((res) => res.mangaCovers)
-    .catch(() => {}) || {};
-
     // Get data
     let manga = mangaChapterInfo.manga;
     let cover = mangaChapterInfo.cover;
-
+    
     // Remove 'cover' from mangaChapterInfo.
     delete mangaChapterInfo.cover;
 
-    // Check if manga is already in mangaCovers.
-    if (manga in mangaCovers) {
-        // DEBUG
-        if (DEBUG) console.log("Manga is in mangaCovers.");
+    // DEBUG
+    if (DEBUG) console.log("Updating cover.");
 
-        // Check if cover is already in mangaCovers.
-        if (mangaCovers[manga] !== cover) {
-            // DEBUG
-            if (DEBUG) console.log("Updating cover.");
-            // Update cover.
-            mangaCovers[manga] = cover;
-        }
-        else if (DEBUG) console.log("Same cover.");
-    }
-    else {
-        // DEBUG
-        if (DEBUG) console.log("Manga is not in mangaCovers.");
-
-        // Add manga to mangaCovers.
-        mangaCovers[manga] = cover;
-    }
-
-    // Save mangaCovers to localStorage.
-    browser.storage.local.set({mangaCovers: mangaCovers});
+    // Update cover
+    await browser.storage.local.set({[manga]: cover});
 }
