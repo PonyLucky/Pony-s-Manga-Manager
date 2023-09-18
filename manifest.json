@@ -16,6 +16,7 @@
       "src/websites/mangaread.js",
       "src/websites/mangakik.js",
       "src/websites/neatmanga.js",
+      "src/websites/manhwatop.js",
       "src/background.js"
     ]
   },

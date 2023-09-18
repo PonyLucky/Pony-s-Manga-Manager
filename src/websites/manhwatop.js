@@ -147,6 +147,7 @@ class Manhwatop {
     }
 
     static async getChapters(mangaUrl) {
+        // TODO: Fix this. 'list' seems to be empty.
         let listClass = "main";
 
         // Fetch manga page.
