@@ -67,7 +67,7 @@ class MangaInfo {
         let website = selectWebsites(url);
 
         // Get last release date.
-        let lastDate = await website.getContentPage(url)
+        let lastDate = await getContentPage(url)
         .then(async (doc) => website.getLastReleaseDate(doc))
         .catch((err) => {
             console.log("Error: " + err);

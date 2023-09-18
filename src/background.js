@@ -19,6 +19,7 @@ browser.webRequest.onCompleted.addListener(async (details) => {
     tmp.push(await Mangaread.check(url).then(res => res));
     tmp.push(await Mangakik.check(url).then(res => res));
     tmp.push(await NeatManga.check(url).then(res => res));
+    tmp.push(await Manhwatop.check(url).then(res => res));
 
     // Get first non-empty result.
     mangaChapterInfo = tmp.find((manga) => {
@@ -26,7 +27,7 @@ browser.webRequest.onCompleted.addListener(async (details) => {
     });
 
     // Check if mangaChapterInfo is not empty.
-    if (mangaChapterInfo !== undefined && mangaChapterInfo !== {}) {
+    if (mangaChapterInfo !== undefined) {
         // Update mangaHistory.
         await updateMangaHistory(mangaChapterInfo);
     }

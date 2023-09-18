@@ -25,6 +25,8 @@ function selectWebsites(url) {
         website = Mangakik;
     } else if (url.startsWith(NeatManga.url)) {
         website = NeatManga;
+    } else if (url.startsWith(Manhwatop.url)) {
+        website = Manhwatop;
     } else return null;
     return website;
 }

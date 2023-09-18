@@ -1,6 +1,6 @@
-class Mangaread {
+class Manhwatop {
     static DEBUG = false;
-    static url = "https://www.mangaread.org/manga/";
+    static url = "https://manhwatop.com/manga/";
     static async check(url) {
         // DEBUG
         if (this.DEBUG) {
@@ -63,18 +63,6 @@ class Mangaread {
     
         // Return info.
         return mangaChapterInfo;
-    }
-
-    static async getContentPage(url) {
-        // Get manga page.
-        let response = await fetch(url);
-        let html = await response.text();
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(html, "text/html");
-        // DEBUG
-        if (this.DEBUG) console.log("Doc: " + doc);
-        // Return body.
-        return doc.getElementsByTagName("body")[0];
     }
 
     static async getCover(doc) {

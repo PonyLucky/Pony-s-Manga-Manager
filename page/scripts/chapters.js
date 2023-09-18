@@ -63,7 +63,7 @@ class Chapters {
         let mangaCover = "";
         if (isCoverMissing === true) {
             // Get manga cover.
-            mangaCover = await website.getContentPage(url)
+            mangaCover = await getContentPage(url)
             .then(async (doc) => {
                 return await website.getCover(doc)
                 .then(cover => cover)

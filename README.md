@@ -29,7 +29,8 @@ Manga manager to manage current reading manga.
 
 - [x] [Mangaread](https://www.mangaread.org/)
 - [x] [Mangakik](https://mangakik.biz/)
-- [x] [NeatManga](https://neatmangas.com/manga/)
+- [x] [NeatManga](https://neatmangas.com/)
+- [x] [Manhwatop](https://manhwatop.com/)
 
 ## Screenshots
 
