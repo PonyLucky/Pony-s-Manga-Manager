@@ -1,6 +1,6 @@
 # Pony-s-Manga-Manager
 
-Manga manager to manage current reading manga.
+Manga manager to manage mangas on the fly.
 
 ## Web extension
 
