@@ -30,7 +30,23 @@ const THEMES = {
         ["--settings-checkbox-bg-color", "transparent"],
         ["--settings-checkbox-checked-color", "transparent"],
         ["--manga-info-description-bg-color", "#f5f5f5"],
-    ]
+    ],
+    "oled": [
+        ["--bg-color-body", "#000"],
+        ["--bg-color-link", "#004edf"],
+        ["--scrollbar-track-color", "#303030"],
+        ["--scrollbar-thumb-color", "#424242"],
+        ["--text-color-body", "#fff"],
+        ["--button-text-color", "#2196f3"],
+        ["--button-text-color-hover", "#1e88e5"],
+        ["--button-text-color-active", "#1976d2"],
+        ["--red-button-text-color", "#f44336"],
+        ["--red-button-text-color-hover", "#e53935"],
+        ["--red-button-text-color-active", "#d32f2f"],
+        ["--settings-checkbox-bg-color", "var(--scrollbar-track-color)"],
+        ["--settings-checkbox-checked-color", "var(--text-color-body)"],
+        ["--manga-info-description-bg-color", "#404040"],
+    ],
 }
 
 class Themes {
