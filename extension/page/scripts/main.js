@@ -4,7 +4,6 @@
 
 try {
     browser.storage.local.get("mangaHistory", async (data) => {
-        let start1 = new Date();
         // Init settings
         await initSettings();
 
@@ -13,8 +12,8 @@ try {
         // Populate mangaHistory
         mangaHistory.populate(data.mangaHistory || []);
 
-        // Get mangaCovers asynchonously
-        mangaHistory.fillCovers();
+        // Get mangaCovers asynchronously
+        mangaHistory.fillCovers().then();
     });
 }
 catch (e) {
@@ -41,10 +40,7 @@ async function initSettings() {
 
     // Initialize auto-add-checkbox
     let autoAddCheckbox = document.getElementById("auto-add-checkbox");
-    autoAddCheckbox.checked = true;
-    if ('autoAdd' in mangaSettings && mangaSettings.autoAdd === false) {
-        autoAddCheckbox.checked = false;
-    }
+    autoAddCheckbox.checked = !('autoAdd' in mangaSettings && mangaSettings.autoAdd === false);
 
     // Initialize themes
     let themes = Themes.list();

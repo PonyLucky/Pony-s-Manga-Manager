@@ -12,7 +12,6 @@ browser.browserAction.onClicked.addListener(() => {
 
 browser.webRequest.onCompleted.addListener(async (details) => {
     const url = details.url;
-    let mangaChapterInfo = {};
     let tmp = [];
 
     // Check Websites.
@@ -22,7 +21,7 @@ browser.webRequest.onCompleted.addListener(async (details) => {
     tmp.push(await Manhwatop.check(url).then(res => res));
     
     // Get first non-empty result.
-    mangaChapterInfo = tmp.find((manga) => {
+    let mangaChapterInfo = tmp.find((manga) => {
         return manga !== undefined;
     });
     

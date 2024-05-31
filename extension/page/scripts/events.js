@@ -192,7 +192,7 @@ class Events {
                 let mangaHistoryObj = new MangaHistory();
                 // Populate mangaList and covers
                 mangaHistoryObj.populate(mangaHistory);
-                mangaHistoryObj.fillCovers();
+                mangaHistoryObj.fillCovers().then();
                 // Run settings
                 Events.settings();
             };
@@ -236,7 +236,7 @@ class Events {
             let mangaHistoryObj = new MangaHistory();
             // Populate mangaList and fill covers
             mangaHistoryObj.populate(mangaHistory);
-            mangaHistoryObj.fillCovers();
+            mangaHistoryObj.fillCovers().then();
             // Run settings
             Events.settings();
         });
@@ -248,8 +248,7 @@ class Events {
         // Get autoAdd checkbox
         let autoAdd = document.getElementById("auto-add-checkbox");
         // If autoAdd is checked
-        if (autoAdd.checked) mangaSettings.autoAdd = true;
-        else mangaSettings.autoAdd = false;
+        mangaSettings.autoAdd = !!autoAdd.checked;
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
     }

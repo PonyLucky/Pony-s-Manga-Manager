@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Manga Manager</title>
     <!-- Metadata -->
@@ -32,6 +32,7 @@
         <div>
             <!-- Search bar -->
             <div id="search-bar">
+                <label for="search-input" style="display: none;">Search</label>
                 <input id="search-input" type="text" placeholder="Search"/>
                 <button id="search-button" class="b-icon" title="Search">
                     <img src="icons/search.svg" alt="Search"/>
@@ -48,7 +49,7 @@
     <div id="manga-list" class="main"></div>
     <div id="manga-info" class="main hide">
         <div class="manga-info-header">
-            <img id="manga-info-image" src=""/>
+            <img id="manga-info-image" src="" alt="Poster"/>
             <div>
                 <h1 id="manga-info-title"></h1>
                 <h2 id="manga-info-author"></h2>
