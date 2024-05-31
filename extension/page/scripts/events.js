@@ -14,7 +14,7 @@ class Events {
         // Settings buttons
         document.getElementById("settings-button")
             .addEventListener("click", Events.settings);
-        // -- Manga list
+        // -- Settings
         document.getElementById("save-list")
             .addEventListener("click", Events.saveList);
         document.getElementById("upload-list")
@@ -25,6 +25,8 @@ class Events {
             .addEventListener("click", Events.autoAdd);
         document.getElementById("theme-form")
             .addEventListener("click", Events.theme);
+        document.getElementById("sync-test")
+            .addEventListener("click", Events.sync);
         // -- Manga info
         document.getElementById("remove-info")
             .addEventListener("dblclick", Events.removeInfo);
@@ -273,6 +275,23 @@ class Events {
         }
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
+    }
+    static async sync() {
+        // Get current mangaSettings if any
+        let mangaSettings = await browser.storage.local.get("mangaSettings")
+            .then((data) => data.mangaSettings || {});
+        // Get sync input
+        let syncInput = document.getElementById("sync-input");
+        // If sync input not empty
+        if (syncInput.value.length === 0) return;
+        // If test valid
+        if (!await (new Sync(syncInput.value)).test()) return;
+        // Save sync input
+        mangaSettings.sync = syncInput.value;
+        // Save mangaSettings
+        browser.storage.local.set({mangaSettings: mangaSettings});
+        // Reload
+        window.location.reload();
     }
     static search() {
         // Get search input

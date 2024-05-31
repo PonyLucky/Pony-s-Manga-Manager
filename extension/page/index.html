@@ -129,6 +129,16 @@
                     </label>
                 </div>
             </section>
+            <!-- Sync -->
+            <h4>Sync</h4>
+            <section>
+                <div class="sync">
+                    <label for="sync-input">Sync manga list and chapters with a server.</label>
+                    <input type="text" id="sync-input" placeholder="URL"/>
+                    <button id="sync-test" title="Test the connection."><span>TEST</span></button>
+                </div>
+                <div id="sync-result">...</div>
+            </section>
         </div>
         <!-- Manga settings -->
         <div class="hide" data-elmt="manga-info">
@@ -158,6 +168,9 @@
     <!-- -- Utilities functions for next scripts -->
     <!-- -- Class to handle chapters list -->
     <script src="scripts/utils.js"></script>
+    <!-- -- Class to handle sync -->
+    <script src="scripts/sync.js"></script>
+    <!-- -- Class to handle chapters list -->
     <script src="scripts/chapters.js"></script>
     <!-- -- Class to handle manga info tab -->
     <script src="scripts/mangaInfo.js"></script>

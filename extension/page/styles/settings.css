@@ -132,3 +132,32 @@
 #settings #theme-form > label:not(:last-child) {
     margin-right: 6px;
 }
+
+/* Sync */
+#settings .sync {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#settings .sync > label {
+    text-align: center;
+    flex: 1 1 100%;
+}
+
+#settings .sync > input {
+    color: var(--search-bar-input-text-color);
+    border: none;
+    outline: none;
+}
+
+#settings .sync > button {
+    margin-left: -0.6em;
+    font-weight: bold;
+    border-left: 1px solid var(--scrollbar-thumb-color);
+}
+
+#settings .sync > input, #settings .sync > button {
+    background-color: var(--search-bar-bg-color);
+    font-size: large;
+    padding: 8px;
+}
