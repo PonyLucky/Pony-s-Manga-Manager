@@ -88,7 +88,7 @@ async function updateMangaHistory(mangaChapterInfo) {
         // If autoAdd is true.
         if (autoAdd) {
             // Update cover.
-            updateMangaCovers(mangaChapterInfo);
+            updateMangaCovers(mangaChapterInfo).then();
             // Add manga to mangaHistory.
             mangaHistory.unshift(mangaChapterInfo);
         }
