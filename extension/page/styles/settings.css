@@ -82,7 +82,7 @@
 }
 
 /* Theme selection */
-#theme-form {
+#settings #theme-form {
     box-sizing: border-box;
     height: 64px;
     display: flex;
@@ -91,7 +91,7 @@
     flex-flow: row wrap;
 }
 
-#theme-form > input {
+#settings #theme-form > input {
     appearance: none;
     background-color: #ffffff;
     width: 16px;
@@ -105,7 +105,7 @@
     transition: all 0.3s ease;
 }
 
-#theme-form > input::before {
+#settings #theme-form > input::before {
     content: "";
     width: 6px;
     height: 6px;
@@ -115,20 +115,20 @@
     box-shadow: inset 6px 6px #ffffff;
 }
 
-#theme-form > input:checked {
+#settings #theme-form > input:checked {
     background: #0077ff;
     border-color: #0077ff;
 }
 
-#theme-form > input:checked::before {
+#settings #theme-form > input:checked::before {
     transform: scale(1);
 }
 
-#theme-form > label {
+#settings #theme-form > label {
     cursor: pointer;
     padding: 6px 8px;
 }
 
-#theme-form > label:not(:last-child) {
+#settings #theme-form > label:not(:last-child) {
     margin-right: 6px;
 }
