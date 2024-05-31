@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="styles/settings.css"/>
 </head>
 <body>
+    <!-- Top bar -->
     <div class="buttons">
         <!-- Left -->
         <div>
@@ -46,8 +47,13 @@
             </button>
         </div>
     </div>
+
+    <!-- Manga list -->
     <div id="manga-list" class="main"></div>
+
+    <!-- Manga Info -->
     <div id="manga-info" class="main hide">
+        <!-- Header - Left -->
         <div class="manga-info-header">
             <img id="manga-info-image" src="" alt="Poster"/>
             <div>
@@ -58,6 +64,7 @@
                 <span id="manga-info-current"></span>
             </div>
         </div>
+        <!-- Details - Right -->
         <div class="manga-info-details">
             <h3>Details</h3>
             <div>
@@ -75,20 +82,28 @@
                 </div>
             </div>
         </div>
+        <!-- Description -->
         <div class="manga-info-description">
             <h3>Description</h3>
             <div id="manga-info-description"></div>
         </div>
     </div>
+
+    <!-- Chapters list -->
     <div id="manga-chapters" class="main hide"></div>
+
+    <!-- Settings -->
     <div id="settings" class="main hide">
+        <!-- Main settings -->
         <h3>Settings</h3>
         <div class="hide" data-elmt="manga-list">
+            <!-- Theme -->
             <h4>Theme</h4>
             <section>
                 <form id="theme-form">
                 </form>
             </section>
+            <!-- Data -->
             <h4>Data</h4>
             <section>
                 <button id="save-list" title="Save your manga list in a file.">
@@ -104,6 +119,7 @@
                     <span>Clear</span>
                 </button>
             </section>
+            <!-- Background -->
             <h4>Background</h4>
             <section>
                 <div title="'NO' to evaluate a manga.">
@@ -114,6 +130,7 @@
                 </div>
             </section>
         </div>
+        <!-- Manga settings -->
         <div class="hide" data-elmt="manga-info">
             <section>
                 <button id="remove-info" class="red">
@@ -122,6 +139,7 @@
                 </button>
             </section>
         </div>
+        <!-- Chapters settings -->
         <div class="hide" data-elmt="manga-chapters">
             <pre>Not yet implemented</pre>
         </div>
