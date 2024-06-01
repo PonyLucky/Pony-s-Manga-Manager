@@ -38,6 +38,17 @@
     margin-top: 10px;
 }
 
+#manga-info .manga-info-header a {
+    color: var(--button-text-color);
+    text-decoration: none;
+    padding-left: 0.5em;
+    border-left: 2px solid;
+}
+
+#manga-info .manga-info-header a:hover {
+    color: var(--button-text-color-hover);
+}
+
 #manga-info .manga-info-header button {
     background-color: var(--manga-info-button-bg-color);
     border-radius: 30px;

@@ -6,6 +6,7 @@ class MangaInfo {
         this.title = document.getElementById("manga-info-title");
         this.author = document.getElementById("manga-info-author");
         this.status = document.getElementById("manga-info-status");
+        this.homepage = document.getElementById("manga-info-homepage");
         this.read = document.getElementById("manga-info-read");
         this.current = document.getElementById("manga-info-current");
         this.genres = document.getElementById("manga-info-details-genres");
@@ -25,6 +26,7 @@ class MangaInfo {
         this.title.innerText = manga.manga;
         this.author.innerText = manga.author;
         this.status.innerText = manga.status;
+        this.homepage.setAttribute("href", manga.url);
         // Up to 10 characters
         if (manga.chapters[0].length > 20) {
             this.current.innerText = manga.chapters[0].slice(0, 17)
