@@ -161,3 +161,15 @@
     font-size: large;
     padding: 8px;
 }
+
+#settings .sync > #sync-remove {
+    color: var(--red-button-text-color);
+}
+
+#settings .sync > #sync-remove:hover {
+    color: var(--red-button-text-color-hover);
+}
+
+#settings .sync > #sync-remove:active {
+    color: var(--red-button-text-color-active);
+}

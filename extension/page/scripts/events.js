@@ -27,6 +27,8 @@ class Events {
             .addEventListener("click", Events.theme);
         document.getElementById("sync-test")
             .addEventListener("click", Events.sync);
+        document.getElementById("sync-remove")
+            .addEventListener("click", Events.syncRemove);
         // -- Manga info
         document.getElementById("remove-info")
             .addEventListener("dblclick", Events.removeInfo);
@@ -290,6 +292,15 @@ class Events {
         if (!await (new Sync(syncInput.value)).test()) return;
         // Save sync input
         mangaSettings.sync = syncInput.value;
+        // Save mangaSettings
+        browser.storage.local.set({mangaSettings: mangaSettings});
+    }
+    static async syncRemove() {
+        // Get current mangaSettings if any
+        let mangaSettings = await browser.storage.local.get("mangaSettings")
+            .then((data) => data.mangaSettings || {});
+        // Remove sync from mangaSettings
+        delete mangaSettings.sync;
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
     }
