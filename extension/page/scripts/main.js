@@ -11,8 +11,12 @@ catch (e) {
 }
 
 async function init() {
+    // Get mangaSettings from storage.
+    let mangaSettings = await browser.storage.local.get("mangaSettings")
+        .then((res) => res.mangaSettings || {})
+        .catch(() => {});
     // Get synced history
-    let sync = new Sync();
+    let sync = new Sync(mangaSettings.sync);
     let syncedHistory = await sync.getMangaHistory();
     // Merge synced history with local history
     if (syncedHistory.length > 0) {
