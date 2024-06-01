@@ -81,6 +81,11 @@ class MangaHistory {
             browser.storage.local.get(mangaTitle)
             .then((res) => {
                 let cover = res[mangaTitle];
+                // Ensure webp encoding
+                if (cover && !cover.startsWith('data:image/webp')) {
+                    let pos = cover.indexOf('data:image/jpeg');
+                    if (pos === 0) cover = 'data:image/webp' + cover.substring(pos + 15);
+                }
                 // Set cover
                 let coverImg = manga.getElementsByTagName("img")[0];
                 coverImg.setAttribute("src", cover);
