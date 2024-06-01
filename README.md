@@ -12,6 +12,12 @@ Manga manager to manage mangas on the fly.
 
 ## Features
 
+### Sync
+
+1. Syncs manga list with a local server (Docker or Golang).
+2. Smart merge of manga list. Add to both side if not found and update if found based on last read time.
+3. Data is non-sensitive. Only the exact same data as when you click on save in the Settings.
+
 ### Background (while browsing)
 
 1. Automatically add new manga if website supported.
@@ -49,6 +55,17 @@ Manga manager to manage mangas on the fly.
 ### Settings menu
 
 ![Settings menu](screenshots/settings.png)
+
+## Docker
+
+### Build
+```bash
+docker build -t manga-manager .
+```
+
+```bash
+docker run -p 7777:7777 -v <LOCAL_DIR>:/app/data --name MangaManager --pull missing manga-manager:latest
+```
 
 ## Getting support
 
