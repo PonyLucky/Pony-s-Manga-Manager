@@ -224,7 +224,7 @@ class Events {
         // Get manga
         let manga = JSON.parse(mangaInfo.dataset.manga);
         // Get mangaHistory
-        browser.storage.local.get("mangaHistory", (data) => {
+        browser.storage.local.get("mangaHistory", async (data) => {
             let mangaHistory = data.mangaHistory || [];
             // Remove manga from mangaHistory
             mangaHistory = mangaHistory.filter((m) => {
@@ -234,17 +234,16 @@ class Events {
             browser.storage.local.set({mangaHistory: mangaHistory});
             // Clear manga from mangaCovers
             browser.storage.local.remove(manga.manga);
+            // Get mangaSettings from storage.
+            let mangaSettings = await browser.storage.local.get("mangaSettings")
+                .then((res) => res.mangaSettings || {})
+                .catch(() => {});
+            // Get synced history
+            let sync = new Sync(mangaSettings.sync);
             // Save merged history to synced history
-            (new Sync()).saveMangaHistory().then();
-            // Click back button
-            document.getElementById("back-button").click();
-            // Create mangaHistory object
-            let mangaHistoryObj = new MangaHistory();
-            // Populate mangaList and fill covers
-            mangaHistoryObj.populate(mangaHistory);
-            mangaHistoryObj.fillCovers().then();
-            // Run settings
-            Events.settings();
+            await sync.saveMangaHistory();
+            // Reload page
+            window.location.reload();
         });
     }
     static async autoAdd() {
