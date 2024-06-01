@@ -45,6 +45,9 @@ async function init() {
             // Save merged history to synced history
             sync.saveMangaHistory().then();
         }
+    } else {
+        // Save local history to synced history
+        sync.saveMangaHistory().then();
     }
     browser.storage.local.get("mangaHistory", async (data) => {
         // Init settings

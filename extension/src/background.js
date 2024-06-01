@@ -158,7 +158,7 @@ class Sync {
     async getMangaHistory() {
         let response = await this.fetch('/manga');
         console.log(response);
-        return response.data;
+        return response.data || [];
     }
 
     async saveMangaHistory() {
