@@ -81,11 +81,6 @@ class MangaHistory {
             browser.storage.local.get(mangaTitle)
             .then((res) => {
                 let cover = res[mangaTitle];
-                // Ensure webp encoding
-                if (cover && !cover.startsWith('data:image/webp')) {
-                    let pos = cover.indexOf('data:image/jpeg');
-                    if (pos === 0) cover = 'data:image/webp' + cover.substring(pos + 15);
-                }
                 // Set cover
                 let coverImg = manga.getElementsByTagName("img")[0];
                 coverImg.setAttribute("src", cover);
@@ -108,7 +103,10 @@ class MangaHistory {
             || coverUrl === "undefined"
         );
 
-        this.chapters.fetch(manga, isCoverMissing)
+        // Is on mobile?
+        let isOnMobile = window.innerWidth < 768;
+
+        this.chapters.fetch(manga, isCoverMissing, isOnMobile)
         .then(async (res) => {
             // New chapters
             // -- If no new chapters
@@ -131,6 +129,8 @@ class MangaHistory {
                 // -- Save cover
                 browser.storage.local.set({[manga.manga]: cover});
             }
+            // Is on mobile?
+            if (isOnMobile) coverImg.src = res.coverUrl;
         });
     }
 }

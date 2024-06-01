@@ -81,7 +81,7 @@ class Manhwatop {
             reader.readAsDataURL(blob);
             reader.onloadend = () => {
                 const base64data = reader.result;
-                resolve(base64data);
+                resolve([base64data, imageURL]);
             }
         });
     }

@@ -40,7 +40,7 @@ class Chapters {
         };
         return item;
     }
-    async fetch(manga, isCoverMissing) {
+    async fetch(manga, isCoverMissing, isOnMobile) {
         let url = manga.url;
         let number = manga.chapters[0];
 
@@ -61,15 +61,30 @@ class Chapters {
         if (index === -1) return 0;
 
         let mangaCover = "";
+        let mangaCoverUrl = "";
         if (isCoverMissing === true) {
             // Get manga cover.
-            mangaCover = await getContentPage(url)
+            let coverTmp = await getContentPage(url)
             .then(async (doc) => {
                 return await website.getCover(doc)
                 .then(cover => cover)
-                .catch(() => "");
+                .catch(() => ['', '']);
             })
-            .catch(() => "");
+            .catch(() => ['', '']);
+            // Set cover
+            mangaCover = coverTmp[0];
+            mangaCoverUrl = coverTmp[1];
+        }
+        if (isOnMobile) {
+            // Get manga cover.
+            let coverTmp = await getContentPage(url)
+                .then(async (doc) => {
+                    return await website.getCover(doc)
+                        .then(cover => cover)
+                        .catch(() => ['', '']);
+                })
+                .catch(() => ['', '']);
+            mangaCoverUrl = coverTmp[1];
         }
 
         // DEBUG
@@ -80,13 +95,15 @@ class Chapters {
             console.log("Chapters: ");
             console.log(mangaChapters);
             console.log("Cover: " + mangaCover);
+            console.log("Cover URL: " + mangaCoverUrl);
             console.groupEnd();
         }
 
         // Return data
         return {
             newChaptersNumber: index,
-            cover: mangaCover
+            cover: mangaCover,
+            coverUrl: mangaCoverUrl
         }
     }
 }
