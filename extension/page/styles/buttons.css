@@ -111,3 +111,12 @@ div.buttons div#search-bar input {
 div.buttons div#search-bar input:focus {
     outline: none;
 }
+
+#sync-status {
+    font-size: 32px;
+    color: greenyellow;
+    position: relative;
+    right: 10px;
+    bottom: 1px;
+    opacity: 0;
+}
