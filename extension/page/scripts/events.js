@@ -231,9 +231,9 @@ class Events {
                 return m.manga !== manga.manga;
             });
             // Save mangaHistory
-            browser.storage.local.set({mangaHistory: mangaHistory});
+            await browser.storage.local.set({mangaHistory: mangaHistory});
             // Clear manga from mangaCovers
-            browser.storage.local.remove(manga.manga);
+            await browser.storage.local.remove(manga.manga);
             // Get mangaSettings from storage.
             let mangaSettings = await browser.storage.local.get("mangaSettings")
                 .then((res) => res.mangaSettings || {})
