@@ -39,6 +39,9 @@ async function updateMangaHistory(mangaChapterInfo) {
     let mangaHistory = await browser.storage.local.get("mangaHistory")
     .then((res) => res.mangaHistory)
     .catch(() => []) || [];
+    let mangaSettings = await browser.storage.local.get("mangaSettings")
+        .then((res) => res.mangaSettings)
+        .catch(() => {}) || {};
 
     // Check if manga is already in mangaHistory.
     let mangaIndex = mangaHistory.findIndex((manga) => {
@@ -68,8 +71,6 @@ async function updateMangaHistory(mangaChapterInfo) {
         updateMangaCovers(mangaChapterInfo);
         // Add chapter to mangaHistory.
         mangaHistory[mangaIndex].chapters.unshift(mangaChapterInfo.chapters[0]);
-        // Save merged history to synced history
-        await (new Sync()).saveMangaHistory().then();
     }
     // If manga is not in mangaHistory.
     else {
@@ -77,10 +78,6 @@ async function updateMangaHistory(mangaChapterInfo) {
         if (DEBUG) console.log("Manga is not in mangaHistory.");
 
         // Check if mangaSettings exists and has true at 'autoAdd'.
-        let mangaSettings = await browser.storage.local.get("mangaSettings")
-        .then((res) => res.mangaSettings)
-        .catch(() => {}) || {};
-
         let autoAdd = false;
         if ('autoAdd' in mangaSettings) {
             if (mangaSettings.autoAdd === true) autoAdd = true;
@@ -93,8 +90,6 @@ async function updateMangaHistory(mangaChapterInfo) {
             updateMangaCovers(mangaChapterInfo).then();
             // Add manga to mangaHistory.
             mangaHistory.unshift(mangaChapterInfo);
-            // Save merged history to synced history
-            await (new Sync()).saveMangaHistory().then();
         }
         else {
             // DEBUG
@@ -110,7 +105,51 @@ async function updateMangaHistory(mangaChapterInfo) {
     );
 
     // Save mangaHistory to localStorage.
-    browser.storage.local.set({mangaHistory: mangaHistory});
+    await browser.storage.local.set({mangaHistory: mangaHistory});
+
+    // Merge synced history with local history
+    let sync = new Sync(mangaSettings.sync);
+    let syncedHistory = await sync.getMangaHistory();
+    if (syncedHistory.length > 0) {
+        // Get local history
+        let localHistory = mangaHistory;
+        // If not equal, merge
+        if (JSON.stringify(syncedHistory) !== JSON.stringify(localHistory)) {
+            // Merge synced history with local history
+            let mergedHistory = [];
+            for (let i = 0; i < syncedHistory.length; i++) {
+                let manga = syncedHistory[i];
+                let index = localHistory.findIndex((m) => m.manga === manga.manga);
+                if (index !== -1) {
+                    // Which is the most recent 'date'?
+                    if (manga.date > localHistory[index].date) {
+                        mergedHistory.push(manga);
+                    }
+                    else {
+                        mergedHistory.push(localHistory[index]);
+                    }
+                }
+                else {
+                    mergedHistory.push(manga);
+                }
+            }
+            // Add local history that is not in synced history
+            for (let i = 0; i < localHistory.length; i++) {
+                let manga = localHistory[i];
+                let index = mergedHistory.findIndex((m) => m.manga === manga.manga);
+                if (index === -1) {
+                    mergedHistory.push(manga);
+                }
+            }
+            // Save merged history
+            await browser.storage.local.set({mangaHistory: mergedHistory});
+            // Save merged history to synced history
+            sync.saveMangaHistory().then();
+        }
+    } else {
+        // Save local history to synced history
+        sync.saveMangaHistory().then();
+    }
 }
 
 async function updateMangaCovers(mangaChapterInfo) {
