@@ -3,6 +3,43 @@
 // -----------------------------
 
 try {
+    init().then();
+}
+catch (e) {
+    console.log("NOT AS EXTENSION!!!");
+    console.log(e);
+}
+
+async function init() {
+    // Get synced history
+    let sync = new Sync();
+    let syncedHistory = await sync.getMangaHistory();
+    // Merge synced history with local history
+    if (syncedHistory.length > 0) {
+        // Get local history
+        let localHistory = await browser.storage.local.get("mangaHistory")
+            .then((res) => res.mangaHistory)
+            .catch(() => []) || [];
+        // If not equal, merge
+        if (JSON.stringify(syncedHistory) !== JSON.stringify(localHistory)) {
+            // Merge synced history with local history
+            let mergedHistory = [];
+            for (let i = 0; i < syncedHistory.length; i++) {
+                let manga = syncedHistory[i];
+                let index = localHistory.findIndex((m) => m.manga === manga.manga);
+                if (index !== -1) {
+                    mergedHistory.push(localHistory[index]);
+                }
+                else {
+                    mergedHistory.push(manga);
+                }
+            }
+            // Save merged history
+            await browser.storage.local.set({mangaHistory: mergedHistory});
+            // Save merged history to synced history
+            sync.saveMangaHistory().then();
+        }
+    }
     browser.storage.local.get("mangaHistory", async (data) => {
         // Init settings
         await initSettings();
@@ -16,10 +53,7 @@ try {
         mangaHistory.fillCovers().then();
     });
 }
-catch (e) {
-    console.log("NOT AS EXTENSION!!!");
-    console.log(e);
-}
+
 
 // -----------------------------
 // Events
@@ -33,29 +67,6 @@ Events.init();
 // -----------------------------
 
 async function initSettings() {
-    // Get synced history
-    let sync = new Sync();
-    let syncedHistory = await sync.getMangaHistory();
-    // Merge synced history with local history
-    if (syncedHistory.length > 0) {
-        // Get local history
-        let localHistory = await browser.storage.local.get("mangaHistory")
-        .then((res) => res.mangaHistory)
-        .catch(() => []) || [];
-        // Merge synced history with local history
-        let mergedHistory = [...syncedHistory, ...localHistory];
-        // Remove duplicates
-        mergedHistory = mergedHistory.filter((manga, index, self) =>
-            index === self.findIndex((t) => (
-                t.manga === manga.manga
-            ))
-        );
-        // Save merged history
-        browser.storage.local.set({mangaHistory: mergedHistory});
-        // Save merged history to synced history
-        sync.saveMangaHistory().then();
-    }
-
     // Get mangaSettings from storage.
     let mangaSettings = await browser.storage.local.get("mangaSettings")
     .then((res) => res.mangaSettings || {})

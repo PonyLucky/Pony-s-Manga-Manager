@@ -43,7 +43,7 @@ func main() {
 	for _, addr := range addrs {
 		fmt.Println(">", addr)
 	}
-	fmt.Println("\nListening on port 7777")
+	fmt.Println("\nListening on port 7777\n")
 
 	err = http.ListenAndServe(":7777", nil)
 	if err != nil {
@@ -80,6 +80,7 @@ func saveData() {
 }
 
 func testHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("GET /test")
 	response := Response{
 		Status:  "success",
 		Message: "Connection successful",
@@ -94,6 +95,7 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 func mangaHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
+        fmt.Println("GET /manga")
 		response := Response{
 			Status:  "success",
 			Message: "Data fetched successfully",
@@ -104,13 +106,14 @@ func mangaHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 		}
 	case "POST":
+        fmt.Println("POST /manga")
 		var newMangaHistory []Manga
 		err := json.NewDecoder(r.Body).Decode(&newMangaHistory)
 		if err != nil {
 			http.Error(w, "Failed to decode request body", http.StatusBadRequest)
 			return
 		}
-		mangaHistory = append(mangaHistory, newMangaHistory...)
+		mangaHistory = newMangaHistory
 		saveData()
 		response := Response{
 			Status:  "success",

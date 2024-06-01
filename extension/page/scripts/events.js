@@ -290,8 +290,6 @@ class Events {
         mangaSettings.sync = syncInput.value;
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
-        // Reload
-        window.location.reload();
     }
     static search() {
         // Get search input
