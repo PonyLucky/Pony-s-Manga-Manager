@@ -58,7 +58,20 @@ Manga manager to manage mangas on the fly.
 
 ## Docker
 
-### Build
+### Via Docker Hub
+
+Link: <https://hub.docker.com/repository/docker/ponylucky/manga-manager/general>
+
+Command:
+```bash
+docker run -p 7777:7777 -v <LOCAL_DIR>:/app/data --name MangaManager --pull missing ponylucky/manga-manager:latest
+```
+
+Screenshot of my setup in a Synology NAS:
+
+![Docker setup](screenshots/docker.png)
+
+### Manually
 ```bash
 docker build -t manga-manager .
 ```
