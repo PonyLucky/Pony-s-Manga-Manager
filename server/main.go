@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 )
 
 type Manga struct {
 	Manga       string   `json:"manga"`    // Name
-	Chapters    []int    `json:"chapters"` // chapters read
+	Chapters    []string `json:"chapters"` // chapters read
 	Date        int      `json:"date"`     // Date last read (unix timestamp)
 	Url         string   `json:"url"`
 	Author      string   `json:"author"`
@@ -28,25 +29,42 @@ type Response struct {
 var mangaHistory []Manga
 
 func main() {
+	fmt.Println("Server started")
 	readSavedData()
 	http.HandleFunc("/test", testHandler)
 	http.HandleFunc("/manga", mangaHandler)
-	err := http.ListenAndServe(":7777", nil)
+
+	hostname, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
+	addrs, _ := net.LookupIP(hostname)
+	fmt.Println("\nLocal IPs:")
+	for _, addr := range addrs {
+		fmt.Println(">", addr)
+	}
+	fmt.Println("\nListening on port 7777")
+
+	err = http.ListenAndServe(":7777", nil)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func readSavedData() {
+	fmt.Println("\nReading saved data:")
 	file, err := os.ReadFile("data.json")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("> Data found, parsing...")
 	err = json.Unmarshal(file, &mangaHistory)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println("> Data parsed successfully")
+	fmt.Println("> Found:", len(mangaHistory), "manga")
 }
 
 func saveData() {
