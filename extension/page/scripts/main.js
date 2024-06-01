@@ -28,7 +28,13 @@ async function init() {
                 let manga = syncedHistory[i];
                 let index = localHistory.findIndex((m) => m.manga === manga.manga);
                 if (index !== -1) {
-                    mergedHistory.push(localHistory[index]);
+                    // Which has the most chapters?
+                    if (manga.chapters.length > localHistory[index].chapters.length) {
+                        mergedHistory.push(manga);
+                    }
+                    else {
+                        mergedHistory.push(localHistory[index]);
+                    }
                 }
                 else {
                     mergedHistory.push(manga);

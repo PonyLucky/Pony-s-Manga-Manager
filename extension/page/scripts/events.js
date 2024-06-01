@@ -232,6 +232,8 @@ class Events {
             browser.storage.local.set({mangaHistory: mangaHistory});
             // Clear manga from mangaCovers
             browser.storage.local.remove(manga.manga);
+            // Save merged history to synced history
+            (new Sync()).saveMangaHistory().then();
             // Click back button
             document.getElementById("back-button").click();
             // Create mangaHistory object
