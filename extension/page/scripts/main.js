@@ -44,6 +44,14 @@ async function init() {
                     mergedHistory.push(manga);
                 }
             }
+            // Add local history that is not in synced history
+            for (let i = 0; i < localHistory.length; i++) {
+                let manga = localHistory[i];
+                let index = mergedHistory.findIndex((m) => m.manga === manga.manga);
+                if (index === -1) {
+                    mergedHistory.push(manga);
+                }
+            }
             // Save merged history
             await browser.storage.local.set({mangaHistory: mergedHistory});
             // Save merged history to synced history
