@@ -53,12 +53,12 @@ class Chapters {
         .catch(() => []);
 
         // Return null if no chapters.
-        if (mangaChapters.length == 0) return 0;
+        if (mangaChapters.length === 0) return 0;
         // Get index of chapter.
         let index = mangaChapters.indexOf(number);
 
         // Return null if chapter not found.
-        if (index == -1) return 0;
+        if (index === -1) return 0;
 
         let mangaCover = "";
         if (isCoverMissing === true) {

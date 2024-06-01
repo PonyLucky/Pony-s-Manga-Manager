@@ -14,7 +14,7 @@ class Events {
         // Settings buttons
         document.getElementById("settings-button")
             .addEventListener("click", Events.settings);
-        // -- Manga list
+        // -- Settings
         document.getElementById("save-list")
             .addEventListener("click", Events.saveList);
         document.getElementById("upload-list")
@@ -25,6 +25,8 @@ class Events {
             .addEventListener("click", Events.autoAdd);
         document.getElementById("theme-form")
             .addEventListener("click", Events.theme);
+        document.getElementById("sync-test")
+            .addEventListener("click", Events.sync);
         // -- Manga info
         document.getElementById("remove-info")
             .addEventListener("dblclick", Events.removeInfo);
@@ -192,7 +194,7 @@ class Events {
                 let mangaHistoryObj = new MangaHistory();
                 // Populate mangaList and covers
                 mangaHistoryObj.populate(mangaHistory);
-                mangaHistoryObj.fillCovers();
+                mangaHistoryObj.fillCovers().then();
                 // Run settings
                 Events.settings();
             };
@@ -230,13 +232,15 @@ class Events {
             browser.storage.local.set({mangaHistory: mangaHistory});
             // Clear manga from mangaCovers
             browser.storage.local.remove(manga.manga);
+            // Save merged history to synced history
+            (new Sync()).saveMangaHistory().then();
             // Click back button
             document.getElementById("back-button").click();
             // Create mangaHistory object
             let mangaHistoryObj = new MangaHistory();
             // Populate mangaList and fill covers
             mangaHistoryObj.populate(mangaHistory);
-            mangaHistoryObj.fillCovers();
+            mangaHistoryObj.fillCovers().then();
             // Run settings
             Events.settings();
         });
@@ -248,8 +252,7 @@ class Events {
         // Get autoAdd checkbox
         let autoAdd = document.getElementById("auto-add-checkbox");
         // If autoAdd is checked
-        if (autoAdd.checked) mangaSettings.autoAdd = true;
-        else mangaSettings.autoAdd = false;
+        mangaSettings.autoAdd = !!autoAdd.checked;
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
     }
@@ -272,6 +275,21 @@ class Events {
                 break;
             }
         }
+        // Save mangaSettings
+        browser.storage.local.set({mangaSettings: mangaSettings});
+    }
+    static async sync() {
+        // Get current mangaSettings if any
+        let mangaSettings = await browser.storage.local.get("mangaSettings")
+            .then((data) => data.mangaSettings || {});
+        // Get sync input
+        let syncInput = document.getElementById("sync-input");
+        // If sync input not empty
+        if (syncInput.value.length === 0) return;
+        // If test valid
+        if (!await (new Sync(syncInput.value)).test()) return;
+        // Save sync input
+        mangaSettings.sync = syncInput.value;
         // Save mangaSettings
         browser.storage.local.set({mangaSettings: mangaSettings});
     }

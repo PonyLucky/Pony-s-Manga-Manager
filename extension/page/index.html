@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Manga Manager</title>
     <!-- Metadata -->
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="styles/settings.css"/>
 </head>
 <body>
+    <!-- Top bar -->
     <div class="buttons">
         <!-- Left -->
         <div>
@@ -32,6 +33,7 @@
         <div>
             <!-- Search bar -->
             <div id="search-bar">
+                <label for="search-input" style="display: none;">Search</label>
                 <input id="search-input" type="text" placeholder="Search"/>
                 <button id="search-button" class="b-icon" title="Search">
                     <img src="icons/search.svg" alt="Search"/>
@@ -45,10 +47,15 @@
             </button>
         </div>
     </div>
+
+    <!-- Manga list -->
     <div id="manga-list" class="main"></div>
+
+    <!-- Manga Info -->
     <div id="manga-info" class="main hide">
+        <!-- Header - Left -->
         <div class="manga-info-header">
-            <img id="manga-info-image" src=""/>
+            <img id="manga-info-image" src="" alt="Poster"/>
             <div>
                 <h1 id="manga-info-title"></h1>
                 <h2 id="manga-info-author"></h2>
@@ -57,6 +64,7 @@
                 <span id="manga-info-current"></span>
             </div>
         </div>
+        <!-- Details - Right -->
         <div class="manga-info-details">
             <h3>Details</h3>
             <div>
@@ -74,20 +82,28 @@
                 </div>
             </div>
         </div>
+        <!-- Description -->
         <div class="manga-info-description">
             <h3>Description</h3>
             <div id="manga-info-description"></div>
         </div>
     </div>
+
+    <!-- Chapters list -->
     <div id="manga-chapters" class="main hide"></div>
+
+    <!-- Settings -->
     <div id="settings" class="main hide">
+        <!-- Main settings -->
         <h3>Settings</h3>
         <div class="hide" data-elmt="manga-list">
+            <!-- Theme -->
             <h4>Theme</h4>
             <section>
                 <form id="theme-form">
                 </form>
             </section>
+            <!-- Data -->
             <h4>Data</h4>
             <section>
                 <button id="save-list" title="Save your manga list in a file.">
@@ -103,6 +119,7 @@
                     <span>Clear</span>
                 </button>
             </section>
+            <!-- Background -->
             <h4>Background</h4>
             <section>
                 <div title="'NO' to evaluate a manga.">
@@ -112,7 +129,18 @@
                     </label>
                 </div>
             </section>
+            <!-- Sync -->
+            <h4>Sync</h4>
+            <section>
+                <div class="sync">
+                    <label for="sync-input">Sync manga list and chapters with a server.</label>
+                    <input type="text" id="sync-input" placeholder="URL"/>
+                    <button id="sync-test" title="Test the connection."><span>TEST</span></button>
+                </div>
+                <div id="sync-result">...</div>
+            </section>
         </div>
+        <!-- Manga settings -->
         <div class="hide" data-elmt="manga-info">
             <section>
                 <button id="remove-info" class="red">
@@ -121,6 +149,7 @@
                 </button>
             </section>
         </div>
+        <!-- Chapters settings -->
         <div class="hide" data-elmt="manga-chapters">
             <pre>Not yet implemented</pre>
         </div>
@@ -139,6 +168,9 @@
     <!-- -- Utilities functions for next scripts -->
     <!-- -- Class to handle chapters list -->
     <script src="scripts/utils.js"></script>
+    <!-- -- Class to handle sync -->
+    <script src="scripts/sync.js"></script>
+    <!-- -- Class to handle chapters list -->
     <script src="scripts/chapters.js"></script>
     <!-- -- Class to handle manga info tab -->
     <script src="scripts/mangaInfo.js"></script>
