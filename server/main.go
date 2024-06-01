@@ -53,7 +53,7 @@ func main() {
 
 func readSavedData() {
 	fmt.Println("\nReading saved data:")
-	file, err := os.ReadFile("data.json")
+	file, err := os.ReadFile("data/data.json")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -73,7 +73,7 @@ func saveData() {
 		fmt.Println(err)
 		return
 	}
-	err = os.WriteFile("data.json", data, 0644)
+	err = os.WriteFile("data/data.json", data, 0644)
 	if err != nil {
 		fmt.Println(err)
 	}
