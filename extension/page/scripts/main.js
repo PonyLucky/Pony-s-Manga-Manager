@@ -18,11 +18,11 @@ async function init() {
     // Get synced history
     let sync = new Sync(mangaSettings.sync);
     let syncedHistory = await sync.getMangaHistory();
-    let syncInput = document.getElementById("sync-input");
+    let syncResult = document.getElementById("sync-result");
     // Merge synced history with local history
     if (syncedHistory.length > 0) {
         // Say that the sync is working
-        syncInput.textContent = "Connected to sync server.";
+        syncResult.textContent = "Connected to sync server.";
         // Get local history
         let localHistory = await browser.storage.local.get("mangaHistory")
             .then((res) => res.mangaHistory)
@@ -63,8 +63,8 @@ async function init() {
     } else {
         // Save local history to synced history
         sync.saveMangaHistory().then(res => {
-            if (res) syncInput.textContent = "Connected to sync server.";
-            else syncInput.textContent = "Failed to connect to sync server.";
+            if (res) syncResult.textContent = "Connected to sync server.";
+            else syncResult.textContent = "Failed to connect to sync server.";
         });
     }
     browser.storage.local.get("mangaHistory", async (data) => {
