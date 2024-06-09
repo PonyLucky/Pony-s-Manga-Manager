@@ -39,7 +39,7 @@ class Mangaread {
         .then(async (doc) => {
             // Get cover
             mangaChapterInfo.cover = await this.getCover(doc)
-                .then(cover => cover)
+                .then(cover => cover[0])
                 .catch(err => console.log("Error: " + err));
             // Get author
             mangaChapterInfo.author = this.getAuthor(doc);
