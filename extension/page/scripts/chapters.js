@@ -84,6 +84,7 @@ class Chapters {
                         .catch(() => ['', '']);
                 })
                 .catch(() => ['', '']);
+            mangaCover = coverTmp[0];
             mangaCoverUrl = coverTmp[1];
         }
 
